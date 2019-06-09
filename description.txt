@@ -1,0 +1,32 @@
+I need a better description for this
+
+TODO:
+fix freezing bug (don't spam Wind Revolver right click until I fix it)
+add crafting recipes, I have crafting recipies for some weapons, but not others.
+
+Update 0.5:
+Added loot that does a thing instead of just sitting there.
+Added an accessory so complicated that I can't put exactly what it does here.
+Added an arkhalis clone with an above average temperature.
+Added a marvel reference.
+
+Update whateverI'matnow:
+Improvements
+Updated update log,
+Update 0.4:
+updated mod for tmodloader 0.10.1.2
+regretted putting such a high version number for the last version
+
+Update 0.3.1234567890:
+I honestly can't remember.
+
+Update 0.3.?:
+I have no clue how to set up the mod on github, so no icon yet.
+
+Update 0.3.5:
+Added a few items
+items include a poorly programmed pistol with a limited magazine capacity
+
+Update 0.3.1:
+I finally added a changelog
+I also added an icon

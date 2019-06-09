@@ -1,0 +1,12 @@
+author = Tyfyter (Tyfyter2002 on steam)
+
+homepage = 
+
+version = 0.5
+homepage = https://sites.google.com/view/tyfyterpoorlymoddingterraria/home
+displayName = elements
+includeSource = true
+hideCode = false
+hideResources = false
+languageVersion = 6
+buildIgnore = *.csproj, *.user, obj\*, bin\*, .vs\*, old_source\*

@@ -1,0 +1,10 @@
+C:\Users\Tyfyter\Documents\My Games\Terraria\ModLoader\Mod Sources\elemental\bin\Debug\elemental.dll
+C:\Users\Tyfyter\Documents\My Games\Terraria\ModLoader\Mod Sources\elemental\bin\Debug\elemental.pdb
+C:\Users\Tyfyter\Documents\My Games\Terraria\ModLoader\Mod Sources\elemental\bin\Debug\Microsoft.Xna.Framework.dll
+C:\Users\Tyfyter\Documents\My Games\Terraria\ModLoader\Mod Sources\elemental\bin\Debug\Microsoft.Xna.Framework.Game.dll
+C:\Users\Tyfyter\Documents\My Games\Terraria\ModLoader\Mod Sources\elemental\bin\Debug\Microsoft.Xna.Framework.Graphics.dll
+C:\Users\Tyfyter\Documents\My Games\Terraria\ModLoader\Mod Sources\elemental\bin\Debug\Microsoft.Xna.Framework.Xact.dll
+C:\Users\Tyfyter\Documents\My Games\Terraria\ModLoader\Mod Sources\elemental\bin\Debug\Terraria.exe
+C:\Users\Tyfyter\Documents\My Games\Terraria\ModLoader\Mod Sources\elemental\obj\Debug\elemental.csprojResolveAssemblyReference.cache
+C:\Users\Tyfyter\Documents\My Games\Terraria\ModLoader\Mod Sources\elemental\obj\Debug\elemental.dll
+C:\Users\Tyfyter\Documents\My Games\Terraria\ModLoader\Mod Sources\elemental\obj\Debug\elemental.pdb
