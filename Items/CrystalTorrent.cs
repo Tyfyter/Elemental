@@ -6,8 +6,10 @@ using Terraria.ModLoader;
  
 namespace elemental.Items
 {
-    public class CrystalTorrent : ModItem
+    public class CrystalTorrent : ElementalItem
     {
+        public override int Elements => 16;
+
         public override void SetDefaults()
         {
             //item.name = "lightning";          

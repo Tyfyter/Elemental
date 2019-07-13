@@ -10,6 +10,7 @@ namespace elemental.Projectiles
 
     public class WaterBlast : ModProjectile
     {
+        public override string Texture => "elemental/Projectiles/WaterShot";
         public override void SetDefaults()
         {
             //projectile.name = "Water Blast";  //projectile name
@@ -37,7 +38,7 @@ namespace elemental.Projectiles
               for (int i = 0; i < numberProjectiles; i++)
               {
                   Vector2 perturbedSpeed = new Vector2(projectile.velocity.X*(1+Main.rand.Next(1)), projectile.velocity.Y).RotatedByRandom(MathHelper.ToRadians(30)); // This defines the projectiles random spread . 30 degree spread.
-                  Projectile.NewProjectile(projectile.position.X, projectile.position.Y, perturbedSpeed.X, perturbedSpeed.Y, mod.ProjectileType("WaterShot2"), projectile.damage/7, projectile.knockBack, projectile.owner);
+                  Projectile.NewProjectile(projectile.position.X, projectile.position.Y, perturbedSpeed.X, perturbedSpeed.Y, mod.ProjectileType<WaterShot2>(), projectile.damage/7, projectile.knockBack, projectile.owner);
 				  //int iproj = Projectile.NewProjectile(projectile.position.X, projectile.position.Y, perturbedSpeed.X, perturbedSpeed.Y, 27, projectile.damage/7, projectile.knockBack, projectile.owner);
 				  //Main.projectile[iproj].Gravity = true;
               }
@@ -54,11 +55,21 @@ namespace elemental.Projectiles
 			projectile.timeLeft = 6;
             return false;
         }
+        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor){
+            for(int i = 0; i < 6; i++){
+                Vector2 offset = new Vector2(0, Main.rand.NextFloat(0, projectile.height/2));
+                offset = offset.RotatedByRandom(180);
+                int a = Dust.NewDust(projectile.Center + offset, 0, 0, Main.rand.Next(new int[]{29,33,41,45,Dust.dustWater()}), Scale:0.6f);
+                Main.dust[a].velocity = -projectile.velocity;
+                Main.dust[a].noGravity = false;
+            }
+            return false;
+        }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             target.immune[projectile.owner] = 0;
 			projectile.timeLeft = 6;
-			target.AddBuff(mod.BuffType("WaterDebuff"), 600);
+			target.AddBuff(mod.BuffType("WaterDebuff"), target.boss?90:900);
         }
     }
 }

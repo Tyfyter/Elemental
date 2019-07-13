@@ -52,7 +52,7 @@ namespace elemental.Items
             }
             else
             {
-                int dust3 = Dust.NewDust(player.Top + new Vector2(player.direction * -10, 0), 0, 0, 6, 0f, 0f, 25, Color.Firebrick, 2.5f);
+                int dust3 = Dust.NewDust((player.direction==1?player.TopLeft:player.TopRight)-new Vector2(4,-4), 0, 0, 6, 0f, 0f, 25, Color.Firebrick, 2.5f);
                 Main.dust[dust3].noGravity = true;
                 Main.dust[dust3].velocity /= 2;
             }

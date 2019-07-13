@@ -82,7 +82,7 @@ namespace elemental.Items
             if (player.altFunctionUse == 2)     //2 is right click
             {
 				item.useTime = 7;
-				item.useAnimation = 7 * RoundsLeft;
+				item.useAnimation = 7 * RoundsMax;
             }else{
 				item.useTime = 10;
 				item.useAnimation = 10;
@@ -90,7 +90,7 @@ namespace elemental.Items
 			if(reloading > 0 && RoundsLeft != 0){
 				reloading = 0;
 			}
-			if(RoundsLeft == 0){
+			if(RoundsLeft <= 0){
 				return false;
 			}
             item.autoReuse = false;
@@ -115,6 +115,9 @@ namespace elemental.Items
 		
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
+			if(RoundsLeft <= 0){
+				return false;
+			}
 			Main.PlaySound(2, (int)player.position.X, (int)player.position.Y, 11);
 			RoundsLeft--;
 			if(player.altFunctionUse == 2){

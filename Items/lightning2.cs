@@ -1,4 +1,5 @@
 using System;
+using elemental.Projectiles;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
@@ -6,8 +7,9 @@ using Terraria.ModLoader;
  
 namespace elemental.Items
 {
-    public class lightning2 : ModItem
+    public class lightning2 : ElementalItem
     {
+        public override int Elements => 32;
 		public int projectileid(Player player, int id = -1){
             ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>(mod);
             if(id != -1) modPlayer.channellightningid = id;
@@ -90,8 +92,8 @@ namespace elemental.Items
             if (player.altFunctionUse == 2)     //2 is right click
             {
 				item.useTime = 1;
-				item.useAnimation = 2;
-				item.shoot = mod.ProjectileType("LightningBlast2");
+				item.useAnimation = 7;
+				item.shoot = mod.ProjectileType<LightningBlast2>();
 				item.shootSpeed = 10f;    //projectile speed when shoot      
 				item.damage = 25;
                 item.channel = true;
@@ -147,19 +149,32 @@ namespace elemental.Items
 					Main.projectile[a].hostile = false;
                     Main.projectile[a].penetrate = -1;
                     Main.projectile[a].timeLeft *= 3;
+                    Main.projectile[a].localNPCHitCooldown = 9;
+                    Main.projectile[a].usesLocalNPCImmunity = true;
+                    Main.projectile[a].GetGlobalProjectile<ElementalGlobalProjectile>().onHitNPC = LightningStrike;
+                    Main.projectile[a].GetGlobalProjectile<ElementalGlobalProjectile>().modHitNPC = MNPC;
                 }
 				return false;
 			}else if(player.altFunctionUse == 2 && modPlayer.channellightning >= 1){
 				Main.projectile[projectileid(player)].position = position;
                 Main.projectile[projectileid(player)].timeLeft = 3600;
                 Main.projectile[projectileid(player)].velocity = new Vector2(speedX, speedY);
-                int a = Dust.NewDust(position, 0, 0, 131, 0, 0, 0, new Color(0, 255, 255));
+                int a = Dust.NewDust(position+new Vector2(speedX, speedY), 0, 0, 131, 0, 0, 0, new Color(0, 255, 255));
                 Main.dust[a].noGravity = true;
+                if(player.controlUseTile)player.itemAnimation = item.useAnimation-1;
 			}else if(player.altFunctionUse == 2 && !(modPlayer.channellightning >= 1)){
                 projectileid(player, Projectile.NewProjectile(position.X, position.Y, speedX, speedY, type, damage, knockBack, player.whoAmI));
+                Main.projectile[projectileid(player)].GetGlobalProjectile<ElementalGlobalProjectile>().onHitNPC = LightningStrike;
 			}
             modPlayer.channellightning = 5;
 			return false;
         }  
+        public static void LightningStrike(Projectile proj, NPC targ, int damg, bool crit){
+            targ.AddBuff(BuffID.Frozen, targ.boss?8:15);
+            proj.localNPCImmunity[targ.whoAmI] = proj.localNPCHitCooldown;
+        }
+        public static int MNPC(Projectile proj, NPC targ, int damg){
+            return damg+targ.defense/2;
+        }
     }
 }

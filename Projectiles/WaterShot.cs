@@ -13,8 +13,8 @@ namespace elemental.Projectiles
         public override void SetDefaults()
         {
             //projectile.name = "Water Shot";  //projectile name
-            projectile.width = 20;       //projectile width
-            projectile.height = 28;  //projectile height
+            projectile.width = 15;       //projectile width
+            projectile.height = 15;  //projectile height
             projectile.friendly = true;      //make that the projectile will not damage you
             projectile.magic = true;         // 
             projectile.tileCollide = true;   //make that the projectile will be destroed if it hits the terrain
@@ -35,7 +35,16 @@ namespace elemental.Projectiles
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-			target.AddBuff(mod.BuffType("WaterDebuff"), 600);
+			target.AddBuff(mod.BuffType("WaterDebuff"), target.boss?60:600);
+        }
+        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor){
+            for(int i = 0; i < 6; i++){
+                Vector2 offset = new Vector2(0, Main.rand.NextFloat(0, projectile.height/2));
+                offset = offset.RotatedByRandom(180);
+                int a = Dust.NewDust(projectile.Center + offset, 0, 0, Main.rand.Next(new int[]{29,33,Dust.dustWater()}), Scale:0.8f);
+                Main.dust[a].velocity = projectile.velocity/2;
+            }
+            return false;
         }
     }
 }

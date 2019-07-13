@@ -1,4 +1,5 @@
 using System;
+using elemental.Buffs;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -14,7 +15,7 @@ namespace elemental.Projectiles
         {
             //projectile.name = "Wind Shot";  //projectile name
             projectile.width = 20;       //projectile width
-            projectile.height = 28;  //projectile height
+            projectile.height = 20;  //projectile height
             projectile.friendly = true;      //make that the projectile will not damage you
             projectile.magic = true;         // 
             projectile.tileCollide = true;   //make that the projectile will be destroed if it hits the terrain
@@ -34,8 +35,10 @@ namespace elemental.Projectiles
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            target.immune[projectile.owner] = 0;
-			target.AddBuff(mod.BuffType("WindDebuff"), 600);
+            target.immune[projectile.owner] -= 9;
+            float f = target.boss?0.75f:1.5f;
+            target.windDebuff(target.boss?60:600, f, f, f);
+			//target.AddBuff(mod.BuffType<WindDebuff>(), target.boss?60:600);
         }
     }
 }

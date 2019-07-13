@@ -1,4 +1,5 @@
 using System;
+using elemental.Buffs;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -49,11 +50,11 @@ namespace elemental.Projectiles
 			return false;
 		}
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit){
-			target.AddBuff(BuffID.Frozen, target.boss?90:600);
+			target.AddBuff(BuffID.Frozen, target.boss?30:600);
         }
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection){
-            damage+=(int)(target.defense*(target.wet?2:0.5f));
-            damage*=target.wet?2:1;
+            damage+=(int)(target.defense*(target.wet||target.HasBuff<WaterDebuff>()?2:0.5f));
+            damage*=target.wet||target.HasBuff<WaterDebuff>()?2:1;
         }
     }
 }

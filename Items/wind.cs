@@ -1,3 +1,4 @@
+using elemental.Projectiles;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
@@ -5,12 +6,13 @@ using Terraria.ModLoader;
 
 namespace elemental.Items
 {
-	public class wind : ModItem
+	public class wind : ElementalItem
 	{
-		public override void SetDefaults()
+        public override int Elements => 2;
+        public override void SetDefaults()
 		{
 			//item.name = "Wind";
-			item.damage = 5;
+			item.damage = 15;
             item.magic = true;
             item.noMelee = true;
             item.noUseGraphic = false;
@@ -21,11 +23,12 @@ namespace elemental.Items
 			item.useTime = 60;
 			item.useAnimation = 5;
             item.useStyle = 5;
-            item.knockBack = 10;        
+            item.knockBack = 7;
 			item.value = 10000;
 			item.rare = 2;
             item.useStyle = 5;
-            item.shoot = mod.ProjectileType("WindBeam");
+            item.shootSpeed = 12.5f;
+            item.shoot = mod.ProjectileType<WindBeam>();
             item.autoReuse = true;
         }
 		public override void SetStaticDefaults()
@@ -39,13 +42,13 @@ namespace elemental.Items
         {
             if ((!(player.velocity.Y > 0)) || player.sliding)
             {
-                int dust3 = Dust.NewDust(player.Center, 0, 0, 87, 0f, 0f, 25, Color.Goldenrod, 1.5f);
+                int dust3 = Dust.NewDust((player.direction==1?player.Left:player.Right)-new Vector2(4,-4), 0, 0, 87, 0f, 0f, 25, Color.Goldenrod, 1.5f);
                 Main.dust[dust3].noGravity = true;
                 Main.dust[dust3].velocity /= 2;
             }
             else
             {
-                int dust3 = Dust.NewDust(player.Top + new Vector2(player.direction * -10, 0), 0, 0, 87, 0f, 0f, 25, Color.Goldenrod, 1.5f);
+                int dust3 = Dust.NewDust((player.direction==1?player.TopLeft:player.TopRight)-new Vector2(4,-4), 0, 0, 87, 0f, 0f, 25, Color.Goldenrod, 1.5f);
                 Main.dust[dust3].noGravity = true;
                 Main.dust[dust3].velocity /= 2;
             }
@@ -64,7 +67,8 @@ namespace elemental.Items
  
                 item.useTime = 20;
                 item.useAnimation = 20;
-				item.shoot = mod.ProjectileType("WindShot");
+				item.shoot = mod.ProjectileType<WindShot>();
+                item.knockBack = 7;
 				item.shootSpeed = 12.5f;    //projectile speed when shoot
  
                 if (player.statMana >= 35)             //when the player has 35+ mana he can use this item
@@ -79,8 +83,10 @@ namespace elemental.Items
  
             }
 			else{
-				
-            item.shoot = mod.ProjectileType("WindBeam");
+                item.useTime = 60;
+                item.useAnimation = 5;
+			    item.shoot = mod.ProjectileType<WindBeam>();
+                item.knockBack = 4;
 			}
             return base.CanUseItem(player);
         }
@@ -88,7 +94,7 @@ namespace elemental.Items
         public override void AddRecipes()  //How to craft this item
         {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(null, "WindMaterial", 50);   //you need 50 Wind
+            recipe.AddIngredient(null, "WindMaterial", 10);   //you need 10 Wind
             recipe.AddTile(TileID.SkyMill);   //at work bench
             recipe.SetResult(this);
             recipe.AddRecipe();

@@ -7,8 +7,9 @@ using Terraria.ModLoader;
  
 namespace elemental.Items
 {
-    public class Corrupt_Throwing : ModItem
+    public class Corrupt_Throwing : ElementalItem
     {
+        public override int Elements => 64;
         public override void SetDefaults()
         {
             //item.name = "lightning";          

@@ -1,4 +1,5 @@
 using System;
+using elemental.Projectiles;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
@@ -6,11 +7,12 @@ using Terraria.ModLoader;
 
 namespace elemental.Items
 {
-	public class IceBook : ModItem
+	public class IceBook : ElementalItem
 	{
 		int charge = 0;
         int maxcharge = 0;
-		public override void SetDefaults()
+        public override int Elements => 4;
+        public override void SetDefaults()
 		{
 			//item.name = "Ice Gauntlet";
 			item.damage = 20;
@@ -45,13 +47,13 @@ namespace elemental.Items
             ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>(mod);
             if ((!(player.velocity.Y > 0)) || player.sliding)
             {
-                int dust3 = Dust.NewDust(player.Center-new Vector2(12*player.direction, 0), 0, 0, 92, 0f, 0f, 25, Color.Goldenrod, 0.5f);
+                int dust3 = Dust.NewDust((player.direction==1?player.Left:player.Right)-new Vector2(4,-4), 0, 0, 92, 0f, 0f, 25, Color.Goldenrod, 0.5f);
                 Main.dust[dust3].noGravity = true;
                 Main.dust[dust3].velocity *= 1.1f;
             }
             else
             {
-                int dust3 = Dust.NewDust(player.Top-new Vector2(12*player.direction, 0), 0, 0, 92, 0f, 0f, 25, Color.Goldenrod, 0.5f);
+                int dust3 = Dust.NewDust((player.direction==1?player.TopLeft:player.TopRight)-new Vector2(4,-4), 0, 0, 92, 0f, 0f, 25, Color.Goldenrod, 0.5f);
                 Main.dust[dust3].noGravity = true;
                 Main.dust[dust3].velocity *= 1.1f;
             }
@@ -113,7 +115,7 @@ namespace elemental.Items
                         damage = charge;
                         charge = 0;
                         player.itemAnimation = 0;
-                        int ball = Item.NewItem(player.Center, new Vector2(), mod.ItemType("IceBallItem"), noGrabDelay:true);
+                        int ball = Item.NewItem(player.Center, new Vector2(), mod.ItemType<IceBallItem>(), noGrabDelay:true);
                         Main.item[ball].damage = damage;
                     }
                     return false;
@@ -123,7 +125,7 @@ namespace elemental.Items
                 speedY*=(charge/120)+1;
                 charge = 0;
                 player.itemAnimation = 0;
-                type = mod.ProjectileType("IceBallProj");
+                type = mod.ProjectileType<IceBallProj>();
                 return true;
             }else{
                 if(player.controlUseTile&&player.CheckMana(1, true)){
@@ -145,8 +147,8 @@ namespace elemental.Items
                     Vector2 vel1 = new Vector2(speedX,speedY).RotatedBy(charge/45f)*2;
                     Vector2 vel2 = new Vector2(speedX,speedY).RotatedBy(-charge/45f)*2;
                     for(float i = 0; i < 20+(maxcharge*2f); i+=1.5f){
-                        Projectile.NewProjectile(position+(vel1*i), new Vector2(), mod.ProjectileType("IceWaveProj"), maxcharge*3, 1, player.whoAmI);
-                        Projectile.NewProjectile(position+(vel2*i), new Vector2(), mod.ProjectileType("IceWaveProj"), maxcharge*3, 1, player.whoAmI);
+                        Projectile.NewProjectile(position+(vel1*i), new Vector2(), mod.ProjectileType<IceWaveProj>(), maxcharge*3, 1, player.whoAmI);
+                        Projectile.NewProjectile(position+(vel2*i), new Vector2(), mod.ProjectileType<IceWaveProj>(), maxcharge*3, 1, player.whoAmI);
                     }
                     if(charge<=0){
                         maxcharge = 0;

@@ -98,8 +98,10 @@ namespace elemental.Items
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
+			recipe.AddIngredient(ItemID.TitanGlove, 1);
 			recipe.AddIngredient(null, "WindMaterial", 10);
-			recipe.AddTile(TileID.WorkBenches);
+			recipe.AddIngredient(ItemID.Topaz, 6);
+			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this);
 			recipe.AddRecipe();
         }

@@ -41,13 +41,13 @@ namespace elemental.Items
         {
             if (((!(player.velocity.Y > 0))&&!(player.wingTime!=player.wingTimeMax)) || player.sliding)
             {
-                int dust3 = Dust.NewDust(player.Center+new Vector2(12*player.direction, 0), 0, 0, 6, 0f, 0f, 25, Color.Magenta, 2.5f);
+                int dust3 = Dust.NewDust((player.direction==1?player.Left:player.Right)-new Vector2(4,-4), 0, 0, 6, 0f, 0f, 25, Color.Magenta, 2.5f);
                 Main.dust[dust3].noGravity = true;
                 Main.dust[dust3].velocity *= 2;
             }
             else
             {
-                int dust3 = Dust.NewDust(player.Top + new Vector2(player.direction * -12, 0), 0, 0, 6, 0f, 0f, 25, Color.Magenta, 2.5f);
+                int dust3 = Dust.NewDust((player.direction==1?player.TopLeft:player.TopRight)-new Vector2(4,-4), 0, 0, 6, 0f, 0f, 25, Color.Magenta, 2.5f);
                 Main.dust[dust3].noGravity = true;
                 Main.dust[dust3].velocity *= 2;
             }

@@ -1,3 +1,4 @@
+using elemental.Projectiles;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
@@ -5,10 +6,11 @@ using Terraria.ModLoader;
 
 namespace elemental.Items
 {
-	public class IceBallItem : ModItem
+	public class IceBallItem : ElementalItem
 	{
 		int charge = 0;
-		public override void SetDefaults()
+        public override int Elements => 4;
+        public override void SetDefaults()
 		{
 			//item.name = "Ice Gauntlet";
 			item.damage = 20;
@@ -26,7 +28,7 @@ namespace elemental.Items
 			item.value = 10000;
 			item.rare = 2;
             item.useStyle = 1;
-            item.shoot = mod.ProjectileType("IceBallProj");;
+            item.shoot = mod.ProjectileType<IceBallProj>();
             item.shootSpeed = 6.5f;
             item.autoReuse = false;
             item.alpha = 100;

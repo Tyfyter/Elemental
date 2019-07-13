@@ -10,7 +10,7 @@ namespace elemental.Items
         public override void SetDefaults()
         {
             //item.name = "Water";
-            item.width = 20;
+            item.width = 16;
             item.height = 20;
             //item.toolTip = "";
             item.value = 100;

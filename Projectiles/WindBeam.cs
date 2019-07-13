@@ -15,7 +15,7 @@ namespace elemental.Projectiles
         private Vector2 _targetPos;         //Ending position of the laser beam
         private int _charge;                //The charge level of the weapon
         private float _moveDist = 45f;       //The distance charge particle from the player center
-
+        public override string Texture => "elemental/Projectiles/WindShot";
         public override void SetDefaults()
         {
             //projectile.name = "Wind";  //this is the projectile name
@@ -63,10 +63,10 @@ namespace elemental.Projectiles
             #region Draw laser body
             for (float i = transDist; i <= _moveDist; i += step)
             {
-                Color c = Color.White;
+                Color c = Color.Wheat;
                 origin = start + i * unit;
                 spriteBatch.Draw(texture, origin - Main.screenPosition,
-                    new Rectangle(0, 26, 28, 26), i < transDist ? Color.Yellow : c, r,
+                    new Rectangle(0, 26, 28, 26), i < transDist ? Color.Wheat : c, r,
                     new Vector2(28 / 2, 26 / 2), scale, 0, 0);
             }
             #endregion
@@ -90,7 +90,7 @@ namespace elemental.Projectiles
             if (_charge == maxCharge)
             {
                 Player p = Main.player[projectile.owner];
-                Vector2 unit = (Main.player[projectile.owner].Center - _targetPos);
+                Vector2 unit = (Main.player[projectile.owner].MountedCenter - _targetPos);
                 unit.Normalize();
                 float point = 0f;
                 if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), p.Center - 45f * unit, p.Center - unit * _moveDist, 22, ref point))
@@ -106,8 +106,10 @@ namespace elemental.Projectiles
         /// </summary>
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            target.immune[projectile.owner] = 5;
-			target.AddBuff(mod.BuffType("WindDebuff"), 600);
+            target.immune[projectile.owner] -= 7;
+            float f = target.boss?0.75f:2f;
+            target.windDebuff(target.boss?60:600, f, f, f);
+			//target.AddBuff(mod.BuffType("WindDebuff"), target.boss?60:600);
         }
 
         /// <summary>

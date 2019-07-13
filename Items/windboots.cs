@@ -6,14 +6,15 @@ using Terraria.ModLoader;
 
 namespace elemental.Items
 {
-    public class windboots : ModItem
+    public class windboots : ElementalItem
     {
 
-        int manacost = 3;
+        int manacost = 9;
         int fallchance = 2;
         int catches = 2;
         int maxcatches = 2;
-        bool catched = false;
+        int catchtime = 0;
+        public override int Elements => 2;
         public override void SetDefaults()
         {
             //item.name = "Bracelet of the Wind";
@@ -47,22 +48,23 @@ namespace elemental.Items
             player.rocketTimeMax = 5;
             player.maxRunSpeed += 10;
             player.accRunSpeed += 4f;
-            if(player.controlJump && catches > 0){
-                if(/*player.statMana >= manacost*/ player.CheckMana((int)(manacost*player.manaCost), true) && player.rocketTime < player.rocketTimeMax){
+            if(player.controlJump && catches > 0 && player.velocity.Y != 0){
+                if(/*player.statMana >= manacost*/ player.CheckMana((int)((manacost*player.manaCost)*((player.rocketTime<player.rocketTimeMax&&catchtime<=0)?1:0.1f)), true)&&player.rocketTime < player.rocketTimeMax){
                     player.rocketTime++;
                     //player.statMana -= (int)(manacost*player.manaCost);
                     //player.manaRegenDelay = 30;
-                    if(player.statMana < (manacost*player.manaCost) && !catched){
+                    if(player.statMana < (manacost*player.manaCost) && catchtime<=0){
                         catches--;
                         player.ManaEffect(catches);
-                        catched = true;
+                        catchtime = 5;
                         if(catches == 0){
                             player.rocketTime = 0;
                         }
                     }
-                    if(player.statMana >= (manacost*player.manaCost) && catched){
-                        catched = false;
+                    if(player.statMana >= (manacost*player.manaCost) && catchtime>0){
+                        catchtime = 0;
                     }
+                    if(catchtime>0)catchtime--;
                 }
             }
             if(player.velocity.Y == 0 && catches != maxcatches){

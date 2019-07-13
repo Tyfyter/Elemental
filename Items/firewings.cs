@@ -78,6 +78,7 @@ namespace elemental.Items
         }
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
+			base.ModifyTooltips(tooltips);
             Player player = Main.player[item.owner];
             if(NPC.downedGolemBoss&&!NPC.downedAncientCultist&&!charged)tooltips.Add(new TooltipLine(mod, "GolemNotif", "It feels a little warmer now."));
             if(NPC.downedAncientCultist&&!charged){

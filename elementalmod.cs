@@ -11,6 +11,9 @@ using Terraria.ModLoader;
 using Terraria.UI;
 using Terraria.DataStructures;
 using Terraria.GameContent.UI;
+using elemental.Items;
+using elemental.NPCs;
+using System;
 
 namespace elemental
 {
@@ -136,9 +139,53 @@ namespace elemental
             //Main.NewText(a+" and "+b+" lerped by "+c+" equal "+((a*(1-c))+(b*c)));
             return (a*(1-c))+(b*c);
         }
-        public static float constrain(float i, float high, float low){
+        public static float constrain(float i, float low, float high){
             //Main.NewText(high+">"+i+">"+low);
             return i<low?low:(i>high?high:i);
+        }
+        public static Vector2 constrain(Vector2 i, Vector2 low, Vector2 high){
+            //Main.NewText(high+">"+i+">"+low);
+            float x = i.X<low.X?low.X:(i.X>high.X?high.X:i.X);
+            float y = i.Y<low.Y?low.Y:(i.Y>high.Y?high.Y:i.Y);
+            return new Vector2(x, y);
+        }
+        public static bool[] toBoolArray(this int inint){
+            List<bool> outb = new List<bool>(){};
+            for (int i = 0; (1<<i) <= inint; i++){
+                outb.Add((inint&(1<<i))!=0);
+            }
+            outb.Reverse();
+            return outb.ToArray();
+        }
+        public static string toString<T>(this T[] inarr, string seperator = ", ", string caps = "[]"){
+            string outb = "";
+            foreach (var item in inarr){
+                outb+=item.ToString()+seperator;
+            }
+            return caps.Substring(0,1)+outb.Substring(0, outb.Length-2)+caps.Substring(1,1);
+        }
+        public static ElementalItem toElementalItem(this ModItem mi){
+            return (mi as ElementalItem)??new NonElementalItem();
+        }
+        public static ElementalItem toElementalItem(this Item i){
+            return i.modItem!=null?((i.modItem as ElementalItem)??new NonElementalItem()):new NonElementalItem();
+        }
+        ///<param name=sub>the "0 point"(theoretical/enforced max, if knockback is higher than this it will be reduced)</param>
+        ///<param name=div>the rate of increase(higher div = slower increase)</param>
+        ///<param name=max>the maximum knockback multiplier this will set npc.knockBackResist to, if knockback is higher than this it will not be changed</param>
+		public static void windDebuff(this NPC npc, int time, float div = 4f, float sub = 4f,float max = 4f){
+            ElementalGlobalNPC gnpc = npc.GetGlobalNPC<ElementalGlobalNPC>();
+            if(gnpc.windKBtime<=0){
+                gnpc.baseKB = npc.knockBackResist;
+            }
+            if(gnpc.currKB<=max)gnpc.currKB = Math.Min(gnpc.currKB+(sub-gnpc.currKB)/div,max);
+            if(gnpc.windKBtime<time)gnpc.windKBtime=time;
+		}
+        public static bool HasBuff<T>(this Player player) where T : ModBuff {
+            return player.HasBuff(elementalmod.mod.BuffType<T>());
+        }
+        public static bool HasBuff<T>(this NPC npc) where T : ModBuff {
+            return npc.HasBuff(elementalmod.mod.BuffType<T>());
         }
     }
 }

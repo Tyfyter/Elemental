@@ -10,11 +10,9 @@ namespace elemental.Buffs
         public override void SetDefaults()
         {
 			DisplayName.SetDefault("");
-			Description.SetDefault("");
-            //Main.buffName[Type] = "Wind"; //the name displayed when hovering over the buff ingame.
-            //Main.buffTip[Type] = "You've lost your balance!"; //The description of the buff shown when hovering over ingame.          
-            Main.debuff[Type] = true;   //Tells the game if this is a buff or not.
-            Main.pvpBuff[Type] = true;  //Tells the game if pvp buff or not. 
+			Description.SetDefault("");       
+            Main.debuff[Type] = true;
+            Main.pvpBuff[Type] = true;
             Main.buffNoSave[Type] = true;
             longerExpertDebuff = true;
 			canBeCleared = false;

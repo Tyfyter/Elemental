@@ -6,8 +6,9 @@ using Terraria.ModLoader;
  
 namespace elemental.Items
 {
-    public class lightning : ModItem
+    public class lightning : ElementalItem
     {
+        public override int Elements => 32;
         public override void SetDefaults()
         {
             //item.name = "lightning";          

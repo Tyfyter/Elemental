@@ -14,6 +14,7 @@ namespace elemental.Items
 		int souloflight = -1;
 		int frequency = 15;
 		int soulmemorytime = 0;
+		public override bool CloneNewInstances => true;
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Raw Chaos");
@@ -39,9 +40,10 @@ namespace elemental.Items
 			item.noGrabDelay = 0;
 		}
 		public override bool CanPickup(Player player){
-			return souloflight == -2 && soulmemorytime >= 60;
+			return souloflight <= -2 && soulmemorytime >= 60;
 		}
 		public override bool OnPickup(Player player){
+			if(souloflight==-3)return false;
 			time = 0;
 		    timetotal = 0;
 			souloflight = -1;
@@ -99,7 +101,7 @@ namespace elemental.Items
 							timetotal = 0;
 						frequency = 30;
 						}
-						foreach(Player target in Main.player){
+						if(souloflight!=-3)foreach(Player target in Main.player){
 							if((item.Center-target.Center).Length() <= 120){
 								Vector2 veloc = (target.Center-item.Center);
 								veloc.Normalize();
@@ -116,7 +118,7 @@ namespace elemental.Items
 								Main.projectile[a].friendly = true;
 							}
 						}
-					}else{
+					}else if(Main.item[souloflight].stack>0&&item.stack>0){
 						Dust.NewDust(item.Center, 0, 0, DustID.AncientLight);
 						timetotal++;
 						if(timetotal >= 64){
@@ -125,9 +127,9 @@ namespace elemental.Items
 							Item.NewItem(item.position, new Vector2(), mod.ItemType("ChaosMaterial"), (item.stack+Main.item[souloflight].stack)/2);
 							//this.RightClick(Main.player[item.owner]);
 							//item.type = mod.ItemType("ChaosMaterial");
-							Main.item[souloflight].TurnToAir();
-							souloflight = -1;
-							item.TurnToAir();
+							Main.item[souloflight].stack=0;//.TurnToAir();
+							souloflight = -3;
+							item.stack=0;//.TurnToAir();
 						}
 					}
 				}

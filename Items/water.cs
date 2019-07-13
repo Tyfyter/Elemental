@@ -1,4 +1,5 @@
 using System;
+using elemental.Projectiles;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
@@ -6,8 +7,9 @@ using Terraria.ModLoader;
  
 namespace elemental.Items
 {
-    public class water : ModItem
+    public class water : ElementalItem
     {
+        public override int Elements => 8;
         public override void SetDefaults()
         {
             //item.name = "Water";          
@@ -24,16 +26,18 @@ namespace elemental.Items
             item.value = 1000;
             item.rare = 6;
             item.mana = 25;             //mana use
-            item.UseSound = SoundID.Item21;            //this is the sound when you use the item
+            item.UseSound = null;            //this is the sound when you use the item
             item.autoReuse = true;
-            item.shoot = mod.ProjectileType ("WaterShot");  //this make the item shoot your projectile
+            item.shoot = mod.ProjectileType("WaterShot");  //this make the item shoot your projectile
             item.reuseDelay = 60;
             item.shootSpeed = 12.5f;    //projectile speed when shoot
         }      
 		public override void SetStaticDefaults()
 		{
 		  DisplayName.SetDefault("Water");
-		  Tooltip.SetDefault("Casts a water bolt.");
+		  Tooltip.SetDefault("Casts a watery bolt.");
+          DisplayName.AddTranslation("en-UK","Nidteeto");
+          DisplayName.AddTranslation("cy-UK","Nidteeto");
 		}
 		
         public override bool AltFunctionUse(Player player)
@@ -48,7 +52,7 @@ namespace elemental.Items
 				item.useTime = 30;
 				item.useAnimation = 30;
                 item.mana = 100;             //mana use
-                item.shoot = mod.ProjectileType("WaterBlast");
+                item.shoot = mod.ProjectileType<WaterBlast>();
 				item.shootSpeed = 10f;    //projectile speed when shoot      
 				item.damage = 100;  
 				item.reuseDelay = 0;     
@@ -60,7 +64,7 @@ namespace elemental.Items
             item.useTime = 17;
             item.useAnimation = 30;
             item.mana = 25;             //mana use
-            item.shoot = mod.ProjectileType ("WaterShot");
+            item.shoot = mod.ProjectileType<WaterShot>();
             item.shootSpeed = 12.5f;    //projectile speed when shoot      
             item.damage = 35;
             item.reuseDelay = 20;
@@ -75,6 +79,10 @@ namespace elemental.Items
             recipe.AddTile(TileID.WaterDrip);   //at work bench
             recipe.SetResult(this);
             recipe.AddRecipe();
+        }
+        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack){
+            Main.PlaySound(SoundID.Item21.SoundId, position, SoundID.Item21.Style);
+            return true;
         }
     }
 }

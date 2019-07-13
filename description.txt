@@ -1,8 +1,17 @@
 I need a better description for this
 
 TODO:
-fix freezing bug (don't spam Wind Revolver right click until I fix it)
-add crafting recipes, I have crafting recipies for some weapons, but not others.
+add crafting recipes to the remaining items.
+
+Update 0.6:
+"Wind in a Bottle" is now obtainable and a weapon.
+Slightly modified flintlock pistol spirte used for wind revolver has been updated to a slightly modified slightly modified flintlock pistol.
+Crafting recipies updated for and added to several items.
+Other sprites have been modified to remove mixels.
+Improvements.
+Bugfixes.
+Updated update log.
+It's on github, I just still don't know how to set up the 
 
 Update 0.5:
 Added loot that does a thing instead of just sitting there.
@@ -10,12 +19,10 @@ Added an accessory so complicated that I can't put exactly what it does here.
 Added an arkhalis clone with an above average temperature.
 Added a marvel reference.
 
-Update whateverI'matnow:
-Improvements
-Updated update log,
+
 Update 0.4:
 updated mod for tmodloader 0.10.1.2
-regretted putting such a high version number for the last version
+regretted putting such a high build number for the last version
 
 Update 0.3.1234567890:
 I honestly can't remember.

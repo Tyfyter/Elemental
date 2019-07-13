@@ -32,22 +32,8 @@ namespace elemental.Projectiles
         }
 		public override void SetStaticDefaults()
 		{
-			//DisplayName.SetDefault("Crystal Shard"); Original name
 			DisplayName.SetDefault("Frigid Sphere");
 		}
-        public override void AI()           //this make that the projectile will face the corect way
-        {                                                           // |
-            //if((projectile.wet||explode)&&projectile.active)projectile.Kill();
-        }
-        /*public override bool PreKill(int timeLeft){
-            if(!explode){
-                projectile.localNPCImmunity = new int[]{};
-                projectile.damage *= 3;
-                explode = true;
-                return false;
-            }
-            return true;
-        }*/
 		public override bool PreDraw (SpriteBatch spriteBatch, Color lightColor)
 		{
 			return false;

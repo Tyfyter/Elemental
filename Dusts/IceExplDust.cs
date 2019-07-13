@@ -11,6 +11,7 @@ namespace elemental.Dusts
         //public static int error = -1;
 		public override void OnSpawn(Dust dust) {
 			dust.noGravity = true;
+			dust.alpha = 150;
             updateType = 92;
 		}
 

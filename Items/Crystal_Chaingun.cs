@@ -7,9 +7,12 @@ using Terraria.ModLoader;
  
 namespace elemental.Items
 {
-    public class Crystal_Chaingun : ModItem
+    public class Crystal_Chaingun : ElementalItem
     {
         public static short customGlowMask = 0;
+
+        public override int Elements => 16;
+
         public override void SetDefaults()
         {
             //item.name = "lightning";          
@@ -83,6 +86,7 @@ namespace elemental.Items
 		
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
+			base.ModifyTooltips(tooltips);
             for (int i = 0; i < tooltips.Count; i++)
             {
                 if (tooltips[i].text.Contains("DisplayModifier"))

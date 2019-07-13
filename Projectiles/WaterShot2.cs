@@ -1,4 +1,5 @@
 using System;
+using elemental.Buffs;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -10,6 +11,7 @@ namespace elemental.Projectiles
 
     public class WaterShot2 : ModProjectile
     {
+        public override string Texture => "elemental/Projectiles/WaterShot";
         public override void SetDefaults()
         {
             //projectile.name = "Water";  //projectile name
@@ -28,7 +30,7 @@ namespace elemental.Projectiles
         }
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Water, lol");
+			DisplayName.SetDefault("Water");
 		}
         public override void AI()           //this make that the projectile will face the corect way
         {                                                           // |
@@ -63,21 +65,23 @@ namespace elemental.Projectiles
         public override bool OnTileCollide(Vector2 oldVelocity){
             Vector2 diff = oldVelocity - projectile.velocity;
             projectile.velocity -= diff*0.8f;
-            return false;
+            projectile.velocity *= 0.8f;
+            return projectile.velocity.Length()>4;
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             target.immune[projectile.owner] = 5;
-			target.AddBuff(mod.BuffType("WaterDebuff"), 600);
+			target.AddBuff(mod.BuffType<WaterDebuff>(), target.boss?30:300);
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor){
-            for(int i = 0; i < 5; i++){
-                Vector2 offset = new Vector2(0, Main.rand.NextFloat(0, projectile.height));
+            for(int i = 0; i < 3+(projectile.height/10); i++){
+                Vector2 offset = new Vector2(0, Main.rand.NextFloat(0, projectile.height/2));
                 offset = offset.RotatedByRandom(180);
-                int a = Dust.NewDust(projectile.position + offset, 0, 0, Main.rand.Next(new int[]{29,33,41,45}));
+                //int a = Dust.NewDust(projectile.Center + offset, 0, 0, Main.rand.Next(new int[]{29,33,41,45}));
+                int a = Dust.NewDust(projectile.Center + offset, 0, 0, Main.rand.Next(new int[]{29,33,Dust.dustWater()}));
                 Main.dust[a].velocity /= 2;
                 Main.dust[a].scale /= 2;
-                Main.dust[a].noGravity = true;
+                Main.dust[a].noGravity = false;
             }
             return false;
         }

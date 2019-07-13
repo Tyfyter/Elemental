@@ -5,6 +5,9 @@ using Terraria.ID;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
 using elemental.Items;
+using static elemental.Extentions;
+using elemental.Classes;
+using elemental.Buffs;
 
 namespace elemental {
     internal class ElementalPlayer : ModPlayer {
@@ -15,8 +18,6 @@ namespace elemental {
         public bool reloadgun = false;
 		public int reloadablegun = 0;
         public bool reflect = false;
-        public bool winddebuffed = false;
-        public bool waterdebuffed = false;
 		public float multiplyCrit = 1;
         public int pullhook = 3;
         public int WindGauntletCD = 0;
@@ -59,14 +60,11 @@ namespace elemental {
             FlameShield = false;
             IceShield = false;
             reflect = false;
-			winddebuffed = false;
-			waterdebuffed = false;
             if(!FireWings)goto skipb;
+            if(player.wet||player.HasBuff<WaterDebuff>())goto skipa;
             if(player.velocity.Y==0)goto skipa;
             if(player.HeldItem==null)goto skipa;
-            if(player.HeldItem.modItem==null)goto skipa;
-            if(!(player.HeldItem.modItem is ElementalItem))goto skipa;
-            if((((ElementalItem)player.HeldItem.modItem).Elements&1)!=0)goto skipb;
+            if((player.HeldItem.toElementalItem().Elements&ElEnum.fire)!=0)goto skipb;
             skipa:
             if(FireWings&&player.oldVelocity.Y>4){
                 int proj = Projectile.NewProjectile(player.Bottom, new Vector2(0,24), ProjectileID.RocketFireworkYellow, (int)(player.oldVelocity.Y*4), player.oldVelocity.Y/5, player.whoAmI);
@@ -201,14 +199,33 @@ namespace elemental {
             if(stone){
                 player.stoned = true;
             }
-			if(winddebuffed){
+			if(player.HasBuff(mod.BuffType<WindDebuff>())){
 				player.noKnockback = false;
 				player.autoJump = false;
 			}
-			if(waterdebuffed){
-				player.buffImmune[4] = true;
-				player.buffImmune[34] = true;
-				player.merman = false;
+			if(player.HasBuff<WaterDebuff>()){
+				//player.merman = false;
+                player.gills = false;
+                player.merman = false;
+                bool flag = Collision.DrownCollision(player.position, player.width, player.height, player.gravDir);
+                if(player.armor[0].type==ItemID.FishBowl)flag = true;
+                player.gills = flag;
+                //player.wet = !player.wet;
+                if(flag){
+                    player.breath++;
+                }else{
+                    player.breath -= 4;
+                }
+                if(player.breath <= 0){
+                    player.lifeRegenTime = 0;
+                    player.breath = 0;
+                    player.statLife -= 1;
+                    if (player.statLife <= 0)
+                    {
+                        player.statLife = 0;
+                        player.KillMe(PlayerDeathReason.ByOther(1), 10.0, 0, false);
+                    }
+                }
 				player.buffImmune[69] = false;
 				player.buffImmune[70] = false;
 				player.wingTimeMax = (int)(player.wingTimeMax/4);

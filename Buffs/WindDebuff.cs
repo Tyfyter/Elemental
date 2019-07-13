@@ -14,8 +14,7 @@ namespace elemental.Buffs
             //Main.buffName[Type] = "Wind"; //the name displayed when hovering over the buff ingame.
             //Main.buffTip[Type] = "You've lost your balance!"; //The description of the buff shown when hovering over ingame.          
             Main.debuff[Type] = true;   //Tells the game if this is a buff or not.
-            Main.pvpBuff[Type] = true;  //Tells the game if pvp buff or not. 
-            Main.buffNoSave[Type] = true;
+            Main.pvpBuff[Type] = true;  //Tells the game if pvp buff or not.
             longerExpertDebuff = true;
 			canBeCleared = false;
         }
@@ -32,7 +31,6 @@ namespace elemental.Buffs
             player.noKnockback = false;
             player.autoJump = false;
             player.dashDelay = 10;
-			modPlayer.winddebuffed = true;
         }
 		public override bool ReApply(NPC npc, int time, int buffIndex){
 			npc.knockBackResist += Math.Min(npc.knockBackResist+(5.0f-npc.knockBackResist)/5,5);

@@ -5,9 +5,10 @@ using Terraria.ModLoader;
 
 namespace elemental.Items
 {
-	public class IceGauntlet : ModItem
+	public class IceGauntlet : ElementalItem
 	{
-		public override void SetDefaults()
+        public override int Elements => 4;
+        public override void SetDefaults()
 		{
 			//item.name = "Ice Gauntlet";
 			item.damage = 100;
@@ -42,13 +43,13 @@ namespace elemental.Items
             ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>(mod);
             if ((!(player.velocity.Y > 0)) || player.sliding)
             {
-                int dust3 = Dust.NewDust(player.Center, 0, 0, 92, 0f, 0f, 25, Color.Goldenrod, 1.5f);
+                int dust3 = Dust.NewDust((player.direction==1?player.Left:player.Right)-new Vector2(4,-4), 0, 0, 92, 0f, 0f, 25, Color.Goldenrod, 1.5f);
                 Main.dust[dust3].noGravity = true;
                 Main.dust[dust3].velocity = new Vector2(0, 0);
             }
             else
             {
-                int dust3 = Dust.NewDust(player.Top + new Vector2(player.direction * -10, 0), 0, 0, 92, 0f, 0f, 25, Color.Goldenrod, 1.5f);
+                int dust3 = Dust.NewDust((player.direction==1?player.TopLeft:player.TopRight)-new Vector2(4,-4), 0, 0, 92, 0f, 0f, 25, Color.Goldenrod, 1.5f);
                 Main.dust[dust3].noGravity = true;
                 Main.dust[dust3].velocity = new Vector2(0, 0);
             }
