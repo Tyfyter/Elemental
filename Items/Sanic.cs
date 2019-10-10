@@ -12,7 +12,6 @@ namespace elemental.Items
 
         public override void SetDefaults()
         {
-            //item.name = "Blue Hedgehog Quills";
             item.width = 10;
             item.height = 14;
             //item.toolTip = "Gotta Go Fast";
@@ -22,14 +21,14 @@ namespace elemental.Items
         }
 		public override void SetStaticDefaults()
 		{
-		  DisplayName.SetDefault("Blue Hedgehog Quills");
-		  Tooltip.SetDefault("Gotta Go Fast");
+		  DisplayName.SetDefault("Blue");
+		  Tooltip.SetDefault("Must Fast");
 		}
-        public override void AddRecipes()  //How to craft this item
+        public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(null, "WindMaterial", 20);   //you need 20 Wind
-            recipe.AddTile(TileID.SkyMill);   //at work bench
+            recipe.AddIngredient(null, "WindMaterial", 20);
+            recipe.AddTile(TileID.SkyMill);
             recipe.SetResult(this);
             recipe.AddRecipe();
         }

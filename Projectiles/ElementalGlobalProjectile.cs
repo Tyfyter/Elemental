@@ -45,7 +45,7 @@ namespace elemental.Projectiles
             }
         }
         public override void ModifyHitNPC(Projectile projectile, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection){
-            if(modHitPlayer!=null){
+            if(modHitNPC!=null){
                 damage = modHitNPC.Invoke(projectile, target, damage);
             }
         }

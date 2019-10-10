@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using elemental.Projectiles;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
@@ -32,7 +33,7 @@ namespace elemental.Items
             //item.UseSound = SoundID.CreateTrackable("dd2_wither_beast_crystal_impact", 3, SoundType.Sound);            //this is the sound when you use the item
 			item.UseSound = SoundID.DD2_WitherBeastCrystalImpact;
             item.autoReuse = true;
-            item.shoot = mod.ProjectileType ("CrystalShot");  //this make the item shoot your projectile
+            item.shoot = mod.ProjectileType<CrystalShot>();  //this make the item shoot your projectile
             item.shootSpeed = 3.5f;    //projectile speed when shoot
             item.glowMask = customGlowMask;
 			item.useAmmo = AmmoID.Bullet;

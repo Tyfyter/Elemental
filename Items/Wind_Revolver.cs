@@ -11,11 +11,11 @@ namespace elemental.Items
 {
     public class Wind_Revolver : ElementalItem
     {
-        private static int RoundsLeft = 6;
+        private int RoundsLeft = 6;
         private static int RoundsMax = 6;
-        private static int reloading = 0;
-        private static int reloadspeed = 5;
-        private static int altfire = 0;
+        private int reloading = 0;
+        private int reloadspeed = 5;
+        private int altfire = 0;
         public static short customGlowMask = 0;
 		public DList<ProjectileStats> bullets = new DList<ProjectileStats>(ProjectileStats.bullet){};
         public override int Elements => 2;

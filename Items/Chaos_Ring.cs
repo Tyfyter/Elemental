@@ -24,8 +24,8 @@ namespace elemental.Items
 		public override void SetStaticDefaults()
 		{
 		  DisplayName.SetDefault("Chaos Ring");
-		  Tooltip.SetDefault(@"How did you put chaos into a ring? 
-          +100% Crit Chance 
+		  Tooltip.SetDefault(@"How did you make a ring out of pure chaos? 
++100% Crit Chance 
 		  DisplayCrit");
 		}
         /*public override void AddRecipes()  //How to craft this item
