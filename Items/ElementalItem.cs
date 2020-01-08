@@ -31,6 +31,39 @@ namespace elemental.Items
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
             Player player = Main.player[item.owner];
+            string text = "";
+            string comma = "";
+            for(int i = 0; i < 7; i++){
+                if((Elements&(1<<i))!=0){
+                    string col = "";
+                    switch(i){
+                        case 0:
+                        col = "FF6400";
+                        break;
+                        case 1:
+                        col = "FFFF66";
+                        break;
+                        case 2:
+                        col = "32FFFF";
+                        break;
+                        case 3:
+                        col = "2D2DD7";
+                        break;
+                        case 4:
+                        col = "FF22AE";
+                        break;
+                        case 5:
+                        col = "0AEB7D";
+                        break;
+                        case 6:
+                        col = "5A197E";
+                        break;
+                    }
+                    text+=$"{comma}[c/{col}:{ElEnum.ElNames[i]}]";
+                    comma = ", ";
+                }
+            }
+            tooltips.Insert(1, new TooltipLine(mod, "Elements", text));
             for (int i = 0; i < tooltips.Count; i++){
                 if(tooltips[i].Name.Equals("ItemName")){
                     //string s = "";

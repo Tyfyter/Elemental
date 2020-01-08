@@ -15,5 +15,6 @@ namespace elemental.Classes {
         chaos = 16,
         lightning = 32,
         darkness = 64;
+        public static string[] ElNames = new string[]{"Fire", "Wind", "Ice", "Water", "Chaos", "Lightning", "Darkness"};
     }
 }
