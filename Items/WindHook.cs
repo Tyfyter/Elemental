@@ -4,6 +4,7 @@ using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Terraria.ModLoader.ModContent;
 
 namespace elemental.Items
 {
@@ -12,7 +13,7 @@ namespace elemental.Items
 		public override void SetDefaults()
         {
             /*Player player = Main.player[item.owner];
-            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>(mod);
+            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>();
             /*
 				this.noUseGraphic = true;
 				this.damage = 0;
@@ -36,7 +37,7 @@ namespace elemental.Items
 			item.damage = 50;
 			item.shootSpeed = 25f; // how quickly the hook is shot.
             //item.toolTip = modPlayer.pullhook + "";
-            item.shoot = mod.ProjectileType("WindHookProjectile");
+            item.shoot = ProjectileType<WindHookProjectile>();
 		}
 		public override void SetStaticDefaults()
 		{
@@ -56,7 +57,7 @@ namespace elemental.Items
 
         public override void RightClick(Player player)
         {
-            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>(mod);
+            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>();
             //item.toolTip = modPlayer.pullhook + "";
             modPlayer.pullhook = 5;
             base.RightClick(player);
@@ -64,7 +65,7 @@ namespace elemental.Items
 
         public override bool CanUseItem(Player player)
         {
-            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>(mod);
+            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>();
             //item.toolTip = modPlayer.pullhook + "";
             modPlayer.pullhook = 5;
             Main.NewText("!");
@@ -73,7 +74,7 @@ namespace elemental.Items
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>(mod);
+            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>();
             //item.toolTip = modPlayer.pullhook + "";
             modPlayer.pullhook = 5;
             Main.NewText(".");
@@ -198,7 +199,7 @@ namespace elemental.Items
         public override void AI()
         {
             Player player = Main.player[projectile.owner];
-            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>(mod);
+            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>();
 
             int hooksOut = 0;
             for (int l = 0; l < 1000; l++)

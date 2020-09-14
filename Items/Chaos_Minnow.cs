@@ -7,6 +7,8 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
+using static Terraria.ModLoader.ModContent;
+
 namespace elemental.Items
 {
 	public class Chaos_Minnow : ModItem
@@ -48,7 +50,7 @@ namespace elemental.Items
 			}
 			if(fishleft>0&&Main.rand.Next(7)==0){
 				Vector2 pos = player.Center+(new Vector2(Main.rand.Next(160)).RotatedByRandom(Math.PI*2));
-				NPC.NewNPC((int)pos.X, (int)pos.Y, mod.NPCType<ChaosMinnow>(), Target:player.whoAmI);
+				NPC.NewNPC((int)pos.X, (int)pos.Y, NPCType<ChaosMinnow>(), Target:player.whoAmI);
 				for (int i = 0; i < 7; i++)Dust.NewDust(pos, 8, 8, 164, newColor:new Color(255,0,255));
 				fishleft--;
 			}

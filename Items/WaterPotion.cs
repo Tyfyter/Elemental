@@ -10,6 +10,7 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static elemental.Extentions;
+using static Terraria.ModLoader.ModContent;
  
 namespace elemental.Items
 {
@@ -53,7 +54,7 @@ namespace elemental.Items
 		}
 		public override bool CanUseItem(Player player){
 			if(player.altFunctionUse==2){
-            	item.buffType = mod.BuffType<WaterDebuff>();
+            	item.buffType = BuffType<WaterDebuff>();
             	item.buffTime = 1000;
 				item.healLife = 75;
             	item.UseSound = SoundID.Item3;
@@ -75,13 +76,14 @@ namespace elemental.Items
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack){
 			int proj = Projectile.NewProjectile(position, new Vector2(speedX,speedY), type, damage, knockBack, item.owner);
-			Main.projectile[proj].GetGlobalProjectile<ElementalGlobalProjectile>(mod).OverrideTexture = mod.GetTexture("Items/WaterPotion");
-			Main.projectile[proj].GetGlobalProjectile<ElementalGlobalProjectile>(mod).render = false;
-			Main.projectile[proj].GetGlobalProjectile<ElementalGlobalProjectile>(mod).preColl = PColl;
-			Main.projectile[proj].GetGlobalProjectile<ElementalGlobalProjectile>(mod).onHitNPC = PNPC;
-			Main.projectile[proj].GetGlobalProjectile<ElementalGlobalProjectile>(mod).onHitPlayer = PHit;
-			Main.projectile[proj].GetGlobalProjectile<ElementalGlobalProjectile>(mod).modHitPlayer = PMod;
-			Main.projectile[proj].GetGlobalProjectile<ElementalGlobalProjectile>(mod).nullprecull = true;
+			ElementalGlobalProjectile EGP = Main.projectile[proj].GetGlobalProjectile<ElementalGlobalProjectile>();
+			EGP.OverrideTexture = mod.GetTexture("Items/WaterPotion");
+			EGP.render = false;
+			EGP.preColl = PColl;
+			EGP.onHitNPC = PNPC;
+			EGP.onHitPlayer = PHit;
+			EGP.modHitPlayer = PMod;
+			EGP.nullprecull = true;
 			Main.projectile[proj].penetrate++;
 			Main.projectile[proj].ignoreWater = true;
 			return false;
@@ -110,7 +112,7 @@ namespace elemental.Items
 		public static void PNPC(Projectile proj, NPC targ, int damg, bool crit){
 			if(!proj.tileCollide){
 				targ.velocity = lerp(new Vector2(), targ.velocity, 1-constrain(targ.knockBackResist*1.25f, 0.1f, 1f));
-				targ.AddBuff(elementalmod.mod.BuffType<WaterDebuff>(),targ.boss?10:60);
+				targ.AddBuff(BuffType<WaterDebuff>(),targ.boss?10:60);
 			}else{
 				Gore.NewGore(proj.Center, -proj.oldVelocity * 0.2f, 704, 1f);
 				Gore.NewGore(proj.Center, -proj.oldVelocity * 0.2f, 705, 1f);
@@ -135,7 +137,7 @@ namespace elemental.Items
 		public static void PHit(Projectile proj, Player targ, int damg){
 			if(!proj.tileCollide){
 				targ.velocity = lerp(new Vector2(), targ.velocity, 0.85f);
-				targ.AddBuff(elementalmod.mod.BuffType<WaterDebuff>(),450);
+				targ.AddBuff(BuffType<WaterDebuff>(),450);
 			}else{
 				Gore.NewGore(proj.Center, -proj.oldVelocity * 0.2f, 704, 1f);
 				Gore.NewGore(proj.Center, -proj.oldVelocity * 0.2f, 705, 1f);

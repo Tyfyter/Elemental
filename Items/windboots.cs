@@ -42,7 +42,7 @@ namespace elemental.Items
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>(mod);
+            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>();
             player.canRocket = true;
             player.rocketBoots = 2;
             player.rocketTimeMax = 5;

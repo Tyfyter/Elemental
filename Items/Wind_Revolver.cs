@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Terraria.ModLoader.ModContent;
  
 namespace elemental.Items
 {
@@ -62,10 +63,16 @@ namespace elemental.Items
 			recipe.SetResult(this);
 			recipe.AddRecipe();
         }
-		public override void GetWeaponDamage(Player player, ref int damage){
-			int d = bullets[0].damage;
-			base.GetWeaponDamage(player, ref d);
-			damage+=d;
+		// public override void GetWeaponDamage(Player player, ref int damage){
+		// 	int d = bullets[0].damage;
+		// 	/* jshint ignore:start */
+		// 	// eslint-disable-next-line
+		// 	base.GetWeaponDamage(player, ref d);
+		// 	/* jshint ignore:end */
+		// 	damage+=d;
+		// }
+		public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat){
+			add+=bullets[0].damage;
 		}
 		public override void GetWeaponKnockback(Player player, ref float knockback){
 			float d = bullets[0].knockback;
@@ -79,7 +86,7 @@ namespace elemental.Items
 			return new Vector2(-1,3);
 		}
 		public override void HoldItem (Player player){
-            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>(mod);
+            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>();
             item.autoReuse = false;
 			modPlayer.reloadablegun = 2;
 			reloading = Math.Max(reloading, 0);
@@ -118,9 +125,10 @@ namespace elemental.Items
 				Main.dust[d].noGravity = true;
 				/*item.Center*/player.itemLocation = ((player.direction>0?player.Right:player.Left)-new Vector2(16,8))-(new Vector2(24,2).RotatedBy(player.itemRotation)*player.direction);//player.itemLocation-new Vector2(player.direction>0?16:0,0);
 				if(RoundsLeft>0&&-Math.Abs(player.itemRotation)%1<=0.2f){
-					int a = (int)(item.damage*1.5f);
-					GetWeaponDamage(player, ref a);
-					int b = Projectile.NewProjectile(player.itemLocation, new Vector2(4).RotatedBy(player.itemRotation), bullets[0].id==14?160:bullets[0].id, a, item.knockBack, item.owner);//8,
+					//int a = (int)(item.damage*1.5f);
+					//GetWeaponDamage(player, ref a);
+
+					int b = Projectile.NewProjectile(player.itemLocation, new Vector2(4).RotatedBy(player.itemRotation), bullets[0].id==14?160:bullets[0].id, player.GetWeaponDamage(item), item.knockBack, item.owner);//8,
 					if(bullets[0].id!=14)Main.projectile[b].GetGlobalProjectile<ElementalGlobalProjectile>().extraAI = 8;
 					if(bullets[0].id==14)Main.projectile[b].aiStyle = 8;
 					RoundsLeft--;
@@ -159,7 +167,7 @@ namespace elemental.Items
  
         public override bool CanUseItem(Player player)
         {
-            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>(mod);
+            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>();
 			//item.shoot = bullets[0].id;
 			item.shootSpeed = 12.5f+(bullets[0].speed*(item.shootSpeed/12));
 			if(RoundsLeft == 0){
@@ -258,7 +266,7 @@ namespace elemental.Items
 		
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>(mod);
+            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>();
 			Vector2 offset = new Vector2(speedX, speedY);
 			offset.Normalize();
 			Dust.NewDust(position + offset, 1, 1, 134, 0, 0, 0, Color.White, 0.3f);
@@ -267,7 +275,7 @@ namespace elemental.Items
 				for (int i = 0; i < numberProjectiles; i++)
 				{
 					Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(1)); // This defines the projectiles random spread . 30 degree spread.
-					int a = Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, mod.ProjectileType ("CrystalShot"), damage, knockBack, player.whoAmI);
+					int a = Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, ProjectileType ("CrystalShot"), damage, knockBack, player.whoAmI);
 					Main.projectile[a].ai[0] = 0.25f;
 					if(item.prefix == 57){
 					Main.projectile[a].ai[0] = 0.4f;

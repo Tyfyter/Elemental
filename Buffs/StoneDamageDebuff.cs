@@ -20,7 +20,7 @@ namespace elemental.Buffs
 
         public override void Update(Player player, ref int buffIndex)
         {
-            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>(mod);
+            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>();
         }
 		public override bool ReApply(Player player, int time, int buffIndex){
             player.buffTime[buffIndex] += time;

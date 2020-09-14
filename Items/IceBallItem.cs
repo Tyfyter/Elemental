@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Terraria.ModLoader.ModContent;
 
 namespace elemental.Items
 {
@@ -28,7 +29,7 @@ namespace elemental.Items
 			item.value = 10000;
 			item.rare = 2;
             item.useStyle = 1;
-            item.shoot = mod.ProjectileType<IceBallProj>();
+            item.shoot = ProjectileType<IceBallProj>();
             item.shootSpeed = 6.5f;
             item.autoReuse = false;
             item.alpha = 100;

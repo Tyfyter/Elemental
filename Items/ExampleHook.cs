@@ -4,6 +4,7 @@ using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Terraria.ModLoader.ModContent;
 
 namespace elemental.Items
 {
@@ -33,7 +34,7 @@ namespace elemental.Items
 			//item.name = "Poorly Programmed Hook";
 			item.damage = 50;
 			item.shootSpeed = 25f; // how quickly the hook is shot.
-			item.shoot = mod.ProjectileType("ExampleHookProjectile");
+			item.shoot = ProjectileType<ExampleHookProjectile>();
 		}
         
 		public override void SetStaticDefaults()
@@ -53,7 +54,7 @@ namespace elemental.Items
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>(mod);
+            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>();
             modPlayer.pullhook = 3;
             return true;
         }
@@ -176,7 +177,7 @@ namespace elemental.Items
         public override void AI()
         {
             Player player = Main.player[projectile.owner];
-            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>(mod);
+            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>();
             if (projectile.damage == 0)
             {
                 projectile.position = Main.npc[(int)projectile.ai[1]].Center;

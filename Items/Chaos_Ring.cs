@@ -39,7 +39,7 @@ namespace elemental.Items
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
 			//player.HeldItem.crit = Math.Min(player.HeldItem.crit*2, 500000);
-            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>(mod);
+            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>();
 			modPlayer.multiplyCrit += 1.0f;
 			if(item.prefix == 68){
 			modPlayer.multiplyCrit += 0.5f;

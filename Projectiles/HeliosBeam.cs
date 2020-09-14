@@ -47,6 +47,17 @@ namespace elemental.Projectiles
             }
             projectile.rotation = (float)Math.Atan2((double)projectile.velocity.Y, (double)projectile.velocity.X);  
             Lighting.AddLight(projectile.Center, 1, 0.25f, 0);
+            if (projectile.localAI[0] > 3f){
+                for (int i = 0; i < 4; i++){
+                    Vector2 pos = new Vector2(Main.rand.NextFloat(-48,48),Main.rand.NextFloat(-32,32))*(small?0.45f:0.90f);
+                    int d = Dust.NewDust(projectile.Center, 1, 1, 162, 0f, 0f, 0, default(Color), 1f);
+                    Main.dust[d].position = projectile.Center+pos.RotatedBy(projectile.rotation);
+                }
+                return;
+            }
+        }
+        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection){
+            target.AddBuff(ModContent.BuffType<IncinerateDebuff>(), 1);
         }
         //*
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor){

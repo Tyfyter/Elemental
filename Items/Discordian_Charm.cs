@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Terraria.ModLoader.ModContent;
+using elemental.Buffs;
 
 namespace elemental.Items
 {
@@ -47,7 +49,7 @@ namespace elemental.Items
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             if(player.HasBuff(BuffID.ChaosState)){
-                player.AddBuff(mod.BuffType("ChaosBuff"), player.buffTime[player.FindBuffIndex(BuffID.ChaosState)]/35);
+                player.AddBuff(BuffType<ChaosBuff>(), player.buffTime[player.FindBuffIndex(BuffID.ChaosState)]/35);
                 player.buffTime[player.FindBuffIndex(BuffID.ChaosState)] = Math.Max(player.buffTime[player.FindBuffIndex(BuffID.ChaosState)] - 1, 0);
             }
             /*
@@ -67,10 +69,10 @@ namespace elemental.Items
         public override void UpdateInventory(Player player){
             if(player.HasBuff(BuffID.ChaosState)){
                 if(item.prefix != PrefixID.Precise){
-                    player.AddBuff(mod.BuffType("ChaosBuff"), player.buffTime[player.FindBuffIndex(BuffID.ChaosState)]/60);
+                    player.AddBuff(BuffType<ChaosBuff>(), player.buffTime[player.FindBuffIndex(BuffID.ChaosState)]/60);
                     player.buffTime[player.FindBuffIndex(BuffID.ChaosState)] = Math.Max(player.buffTime[player.FindBuffIndex(BuffID.ChaosState)] - 1, 0);
                 }else{
-                    player.AddBuff(mod.BuffType("ChaosBuff"), player.buffTime[player.FindBuffIndex(BuffID.ChaosState)]/35);
+                    player.AddBuff(BuffType<ChaosBuff>(), player.buffTime[player.FindBuffIndex(BuffID.ChaosState)]/35);
                     player.buffTime[player.FindBuffIndex(BuffID.ChaosState)] = Math.Max(player.buffTime[player.FindBuffIndex(BuffID.ChaosState)] - 1, 0);
                 }
             }

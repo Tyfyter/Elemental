@@ -9,6 +9,7 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static elemental.Extentions;
+using static Terraria.ModLoader.ModContent;
  
 namespace elemental.Items
 {
@@ -52,7 +53,7 @@ namespace elemental.Items
 		}
 		public override bool CanUseItem(Player player){
 			if(player.altFunctionUse==2){
-            	//item.buffType = mod.BuffType<WindDebuff>();
+            	//item.buffType = BuffType<WindDebuff>();
             	//item.buffTime = 2000;
             	item.buffType = 0;
             	item.buffTime = 0;
@@ -77,17 +78,19 @@ namespace elemental.Items
 			return true;
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack){
+			ElementalGlobalProjectile EGP;
 			if(player.altFunctionUse==2){
 				if(player.itemAnimation>2||player.itemAnimation<2)return false;
 				item.noUseGraphic = true;
 				item.consumable = true;
 				int proj2 = Projectile.NewProjectile(player.itemLocation, new Vector2(speedX,speedY), type, damage, knockBack, item.owner);
-				Main.projectile[proj2].GetGlobalProjectile<ElementalGlobalProjectile>(mod).OverrideTexture = mod.GetTexture("Items/WindPotion");
-				Main.projectile[proj2].GetGlobalProjectile<ElementalGlobalProjectile>(mod).render = false;
-				Main.projectile[proj2].GetGlobalProjectile<ElementalGlobalProjectile>(mod).onHitNPC = PNPC2;
-				Main.projectile[proj2].GetGlobalProjectile<ElementalGlobalProjectile>(mod).onHitPlayer = PHit2;
-				Main.projectile[proj2].GetGlobalProjectile<ElementalGlobalProjectile>(mod).modHitPlayer = PMod;
-				Main.projectile[proj2].GetGlobalProjectile<ElementalGlobalProjectile>(mod).nullprecull = true;
+				EGP = Main.projectile[proj2].GetGlobalProjectile<ElementalGlobalProjectile>();
+				EGP.OverrideTexture = mod.GetTexture("Items/WindPotion");
+				EGP.render = false;
+				EGP.onHitNPC = PNPC2;
+				EGP.onHitPlayer = PHit2;
+				EGP.modHitPlayer = PMod;
+				EGP.nullprecull = true;
 				Main.projectile[proj2].damage*=2;
 				Rectangle HB = Main.projectile[proj2].Hitbox;
 				HB.Inflate(HB.Width,HB.Height);
@@ -96,13 +99,14 @@ namespace elemental.Items
 				return false;
 			}
 			int proj = Projectile.NewProjectile(position, new Vector2(speedX,speedY), type, damage, knockBack, item.owner);
-			Main.projectile[proj].GetGlobalProjectile<ElementalGlobalProjectile>(mod).OverrideTexture = mod.GetTexture("Items/WindPotion");
-			Main.projectile[proj].GetGlobalProjectile<ElementalGlobalProjectile>(mod).render = false;
-			Main.projectile[proj].GetGlobalProjectile<ElementalGlobalProjectile>(mod).preColl = PColl;
-			Main.projectile[proj].GetGlobalProjectile<ElementalGlobalProjectile>(mod).onHitNPC = PNPC;
-			Main.projectile[proj].GetGlobalProjectile<ElementalGlobalProjectile>(mod).onHitPlayer = PHit;
-			Main.projectile[proj].GetGlobalProjectile<ElementalGlobalProjectile>(mod).modHitPlayer = PMod;
-			Main.projectile[proj].GetGlobalProjectile<ElementalGlobalProjectile>(mod).nullprecull = true;
+			EGP = Main.projectile[proj].GetGlobalProjectile<ElementalGlobalProjectile>();
+			EGP.OverrideTexture = mod.GetTexture("Items/WindPotion");
+			EGP.render = false;
+			EGP.preColl = PColl;
+			EGP.onHitNPC = PNPC;
+			EGP.onHitPlayer = PHit;
+			EGP.modHitPlayer = PMod;
+			EGP.nullprecull = true;
 			Main.projectile[proj].penetrate++;
 			return false;
 		}
@@ -165,7 +169,7 @@ namespace elemental.Items
 			targ.velocity = lerp((targ.Center-proj.Center).Normalized()*Math.Max(targ.knockBackResist,1)*(640/(constrain(targ.Center, proj.TopLeft, proj.BottomRight)-proj.Center).Length())*(targ.noTileCollide?1:targ.noGravity?2.5f:6.5f), targ.velocity, 1-Math.Max(targ.knockBackResist, 0.1f));
 		}
 		public static void PHit2(Projectile proj, Player targ, int damg){
-			targ.AddBuff(elementalmod.mod.BuffType<WindDebuff>(), 60);
+			targ.AddBuff(BuffType<WindDebuff>(), 60);
 			if(targ.whoAmI!=proj.owner)targ.velocity = lerp((targ.MountedCenter-proj.Center).Normalized()*(64/(constrain(targ.Center, proj.TopLeft, proj.BottomRight)-proj.Center).Length())*7.5f, targ.velocity, targ.velocity.Y==0?0.4f:0.6f);
 		}
 		public static int PMod(Projectile proj, Player targ, int damg){

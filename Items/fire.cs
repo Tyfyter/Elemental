@@ -3,6 +3,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using elemental.Projectiles;
+using static Terraria.ModLoader.ModContent;
 
 namespace elemental.Items
 {
@@ -27,7 +28,7 @@ namespace elemental.Items
 			item.rare = 2;
             item.UseSound = SoundID.DD2_BetsyFireballImpact;
             item.shootSpeed = 12.5f;
-            item.shoot = mod.ProjectileType("FireWhip");
+            item.shoot = ProjectileType<FireWhip>();
             item.autoReuse = false;
         }
 		
@@ -61,20 +62,20 @@ namespace elemental.Items
  
         public override bool CanUseItem(Player player)
         {
-            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>(mod);
+            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>();
             if (player.altFunctionUse == 2)     //2 is right click
             {
  
                 item.useTime = 2;
                 item.useAnimation = 14;
-				item.shoot = mod.ProjectileType("FireBall");
+				item.shoot = ProjectileType<FireBall>();
 
 
             }
 			else{
                 item.useTime = 1;
                 item.useAnimation = 5;
-                item.shoot = mod.ProjectileType("FireWhip");
+                item.shoot = ProjectileType<FireWhip>();
 			}
             return base.CanUseItem(player) && !modPlayer.FlameShield;
         }

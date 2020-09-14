@@ -37,7 +37,7 @@ namespace elemental.Items
         }*/
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>(mod);
+            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>();
             player.maxMinions += 9+(90*modPlayer.consumedgravityglobes);
 			
             if (player.HeldItem.summon)
@@ -52,7 +52,7 @@ namespace elemental.Items
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
             Player player = Main.player[item.owner];
-            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>(mod);
+            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>();
             for (int i = 0; i < tooltips.Count; i++)
             {
                 if (tooltips[i].text.Contains("DisplayConsumed"))

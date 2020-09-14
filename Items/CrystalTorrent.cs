@@ -1,8 +1,10 @@
 using System;
+using elemental.Projectiles;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Terraria.ModLoader.ModContent;
  
 namespace elemental.Items
 {
@@ -29,7 +31,7 @@ namespace elemental.Items
             //item.UseSound = SoundID.CreateTrackable("dd2_wither_beast_crystal_impact", 3, SoundType.Sound);            //this is the sound when you use the item
 			item.UseSound = SoundID.DD2_WitherBeastCrystalImpact;
             item.autoReuse = true;
-            item.shoot = mod.ProjectileType ("CrystalShot");  //this make the item shoot your projectile
+            item.shoot = ProjectileType<CrystalShot>();  //this make the item shoot your projectile
             item.shootSpeed = 4.5f;    //projectile speed when shoot
         }      
 		
@@ -64,7 +66,7 @@ namespace elemental.Items
             item.useAnimation = 5;
             item.shootSpeed = 4.5f;    //projectile speed when shoot      
             item.damage = 50;
-            //item.shoot = mod.ProjectileType ("CrystalShot");  //this make the item shoot your projectile
+            //item.shoot = ProjectileType ("CrystalShot");  //this make the item shoot your projectile
 			item.shoot = 477;
             item.autoReuse = true;
             item.mana = 5;             //mana use

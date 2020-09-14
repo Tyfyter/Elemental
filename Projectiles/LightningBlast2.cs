@@ -41,7 +41,7 @@ namespace elemental.Projectiles
         public override void AI()           //this make that the projectile will face the corect way
         {                                                           // |
             Player player = Main.player[projectile.owner];
-            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>(mod);
+            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>();
             Vector2 mousePos = Main.MouseWorld;
             projectile.rotation = (float)Math.Atan2((double)projectile.velocity.Y, (double)projectile.velocity.X) + 1.57f;
             Vector2 unit = (mousePos - player.Center);
@@ -61,20 +61,20 @@ namespace elemental.Projectiles
 
         public override bool PreKill(int timeLeft){
             Player player = Main.player[projectile.owner];
-            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>(mod);
+            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>();
             return !(modPlayer.channellightning >= 1 && modPlayer.channellightningid == projectile.whoAmI);
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             target.immune[projectile.owner] = 0;
             if ((float)Main.rand.Next(100) <= (float)(_charge/2)) {
-                //target.AddBuff(mod.BuffType("LightningDebuff"), 600);
+                //target.AddBuff(BuffType("LightningDebuff"), 600);
             }
         }
 
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection){
             Player player = Main.player[projectile.owner];
-            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>(mod);
+            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>();
             damage = (int)(damage*mult);
             if(modPlayer.channellightning >= 1 && modPlayer.channellightningid == projectile.whoAmI){
                 target.position = projectile.position + projectile.velocity;

@@ -43,7 +43,7 @@ namespace elemental.Items
 		}
 		
 		public override void HoldItem (Player player){
-            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>(mod);
+            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>();
 			modPlayer.reloadablegun = 2;
 			if(modPlayer.reloadgun || RoundsLeft == 0){
 				if(RoundsLeft != RoundsMax && reloading == 0){
@@ -78,7 +78,7 @@ namespace elemental.Items
  
         public override bool CanUseItem(Player player)
         {
-            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>(mod);
+            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>();
             if (player.altFunctionUse == 2)     //2 is right click
             {
 				item.useTime = 7;
@@ -153,7 +153,7 @@ namespace elemental.Items
 		
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>(mod);
+            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>();
 			Vector2 offset = new Vector2(speedX, speedY);
 			offset.Normalize();
 			Dust.NewDust(position + offset, 1, 1, 134, 0, 0, 0, Color.White, 0.3f);
@@ -162,7 +162,7 @@ namespace elemental.Items
 				for (int i = 0; i < numberProjectiles; i++)
 				{
 					Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(1)); // This defines the projectiles random spread . 30 degree spread.
-					int a = Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, mod.ProjectileType ("CrystalShot"), damage, knockBack, player.whoAmI);
+					int a = Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, ProjectileType ("CrystalShot"), damage, knockBack, player.whoAmI);
 					Main.projectile[a].ai[0] = 0.25f;
 					if(item.prefix == 57){
 					Main.projectile[a].ai[0] = 0.4f;

@@ -28,7 +28,7 @@ namespace elemental.Items
             item.useStyle = 5;   //The way your Weapon will be used, 5 is the Holding Out Used for: Guns, Spellbooks, Drills, Chainsaws, Flails, Spears for example
             item.shootSpeed = 4f;       //This defines the projectile speed when shoot
             item.useAnimation = 7;                         //Speed is not important here
-            item.shoot = mod.ProjectileType("CustomBeamProj");  //This defines what type of projectile this weapon will shoot	
+            item.shoot = ProjectileType("CustomBeamProj");  //This defines what type of projectile this weapon will shoot	
             item.value = Item.sellPrice(0, 3, 0, 0);//	How much the item is worth, in copper coins, when you sell it to a merchant. It costs 1/5th of this to buy it back from them. An easy way to remember the value is platinum, gold, silver, copper or PPGGSSCC (so this item price is 3gold)
         }
     }

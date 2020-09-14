@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Terraria.ModLoader.ModContent;
 
 namespace elemental.Items
 {
@@ -28,7 +29,7 @@ namespace elemental.Items
 			item.rare = 2;
             item.useStyle = 5;
             item.shootSpeed = 12.5f;
-            item.shoot = mod.ProjectileType<WindBeam>();
+            item.shoot = ProjectileType<WindBeam>();
             item.autoReuse = true;
         }
 		public override void SetStaticDefaults()
@@ -67,7 +68,7 @@ namespace elemental.Items
  
                 item.useTime = 20;
                 item.useAnimation = 20;
-				item.shoot = mod.ProjectileType<WindShot>();
+				item.shoot = ProjectileType<WindShot>();
                 item.knockBack = 7;
 				item.shootSpeed = 12.5f;    //projectile speed when shoot
  
@@ -85,7 +86,7 @@ namespace elemental.Items
 			else{
                 item.useTime = 60;
                 item.useAnimation = 5;
-			    item.shoot = mod.ProjectileType<WindBeam>();
+			    item.shoot = ProjectileType<WindBeam>();
                 item.knockBack = 4;
 			}
             return base.CanUseItem(player);

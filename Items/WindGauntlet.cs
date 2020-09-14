@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Terraria.ModLoader.ModContent;
 
 namespace elemental.Items
 {
@@ -58,9 +59,12 @@ namespace elemental.Items
             player.portalPhysicsFlag = true;
             base.HoldItem(player);
         }
-        public override void GetWeaponDamage(Player player, ref int damage){
-            damage += (int)(damage*(Main.player[item.owner].velocity.Length()/8));
-            base.GetWeaponDamage(player, ref damage);
+        // public override void GetWeaponDamage(Player player, ref int damage){
+        //     damage += (int)(damage*(player.velocity.Length()/8));
+        //     base.GetWeaponDamage(player, ref damage);
+        // }
+        public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat){
+            mult*=1+(player.velocity.Length()/8);
         }
 
         public override bool AltFunctionUse(Player player)
@@ -70,7 +74,7 @@ namespace elemental.Items
  
         public override bool CanUseItem(Player player)
         {
-            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>(mod);
+            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>();
             if (player.altFunctionUse == 2)     //2 is right click
             {
  
@@ -108,7 +112,7 @@ namespace elemental.Items
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>(mod);
+            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>();
             if (player.altFunctionUse == 2)
             {
                 modPlayer.WindGauntletCD = 60;

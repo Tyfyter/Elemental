@@ -27,7 +27,7 @@ namespace elemental.Commands
 
 		public override void Action(CommandCaller player, string input, string[] args)
 		{
-            player.GetModPlayer<ElementalPlayer>(mod).test = (int)args[0];
+            player.GetModPlayer<ElementalPlayer>().test = (int)args[0];
 		}
 	}
 }*/

@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Terraria.ModLoader.ModContent;
 
 namespace elemental.Projectiles
 {
@@ -47,7 +48,7 @@ namespace elemental.Projectiles
             return true;
         }*/
         public override void Kill(int timeLeft){
-            Projectile.NewProjectile(projectile.Center, new Vector2(), mod.ProjectileType<IceBallExpl>(), projectile.damage*3, 0, projectile.owner);
+            Projectile.NewProjectile(projectile.Center, new Vector2(), ProjectileType<IceBallExpl>(), projectile.damage*3, 0, projectile.owner);
         }
 		public override bool PreDraw (SpriteBatch spriteBatch, Color lightColor)
 		{

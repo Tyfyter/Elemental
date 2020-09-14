@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Terraria.ModLoader.ModContent;
 
 namespace elemental.Items
 {
@@ -44,7 +45,7 @@ namespace elemental.Items
 
         public override void HoldStyle(Player player)
         {
-            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>(mod);
+            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>();
             if ((!(player.velocity.Y > 0)) || player.sliding)
             {
                 int dust3 = Dust.NewDust((player.direction==1?player.Left:player.Right)-new Vector2(4,-4), 0, 0, 92, 0f, 0f, 25, Color.Goldenrod, 0.5f);
@@ -67,7 +68,7 @@ namespace elemental.Items
  
         public override bool CanUseItem(Player player)
         {
-            //ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>(mod);
+            //ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>();
             if (player.altFunctionUse != 2)     //2 is right click
             {
                 item.useTime = 1;
@@ -107,7 +108,7 @@ namespace elemental.Items
                             int a = Dust.NewDust(position-new Vector2(speedX,speedY), 0, 0, 92);
                             Main.dust[a].noGravity = true;
                         }
-                    }else if(Main.time%12<=1){
+                    }else if(Main.GameUpdateCount%12<=1){
                         int a = Dust.NewDust(position-new Vector2(speedX,speedY), 0, 0, 92);
                         Main.dust[a].noGravity = true;
                     }
@@ -115,7 +116,7 @@ namespace elemental.Items
                         damage = charge;
                         charge = 0;
                         player.itemAnimation = 0;
-                        int ball = Item.NewItem(player.Center, new Vector2(), mod.ItemType<IceBallItem>(), noGrabDelay:true);
+                        int ball = Item.NewItem(player.Center, new Vector2(), ItemType<IceBallItem>(), noGrabDelay:true);
                         Main.item[ball].damage = damage;
                     }
                     return false;
@@ -125,7 +126,7 @@ namespace elemental.Items
                 speedY*=(charge/120)+1;
                 charge = 0;
                 player.itemAnimation = 0;
-                type = mod.ProjectileType<IceBallProj>();
+                type = ProjectileType<IceBallProj>();
                 return true;
             }else{
                 if(player.controlUseTile&&player.CheckMana(1, true)){
@@ -147,8 +148,8 @@ namespace elemental.Items
                     Vector2 vel1 = new Vector2(speedX,speedY).RotatedBy(charge/45f)*2;
                     Vector2 vel2 = new Vector2(speedX,speedY).RotatedBy(-charge/45f)*2;
                     for(float i = 0; i < 20+(maxcharge*2f); i+=1.5f){
-                        Projectile.NewProjectile(position+(vel1*i), new Vector2(), mod.ProjectileType<IceWaveProj>(), maxcharge*3, 1, player.whoAmI);
-                        Projectile.NewProjectile(position+(vel2*i), new Vector2(), mod.ProjectileType<IceWaveProj>(), maxcharge*3, 1, player.whoAmI);
+                        Projectile.NewProjectile(position+(vel1*i), new Vector2(), ProjectileType<IceWaveProj>(), maxcharge*3, 1, player.whoAmI);
+                        Projectile.NewProjectile(position+(vel2*i), new Vector2(), ProjectileType<IceWaveProj>(), maxcharge*3, 1, player.whoAmI);
                     }
                     if(charge<=0){
                         maxcharge = 0;

@@ -1,7 +1,9 @@
+using elemental.Projectiles;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Terraria.ModLoader.ModContent;
 
 namespace elemental.Items
 {
@@ -40,7 +42,7 @@ namespace elemental.Items
 
         public override void HoldStyle(Player player)
         {
-            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>(mod);
+            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>();
             if ((!(player.velocity.Y > 0)) || player.sliding)
             {
                 int dust3 = Dust.NewDust((player.direction==1?player.Left:player.Right)-new Vector2(4,-4), 0, 0, 92, 0f, 0f, 25, Color.Goldenrod, 1.5f);
@@ -63,7 +65,7 @@ namespace elemental.Items
  
         public override bool CanUseItem(Player player)
         {
-            //ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>(mod);
+            //ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>();
             if (player.altFunctionUse == 2)     //2 is right click
             {
  
@@ -77,7 +79,7 @@ namespace elemental.Items
                 item.channel = true;
                 item.noUseGraphic = true;
                 item.shootSpeed = 2.5f;    //projectile speed when shoot
-                item.shoot = mod.ProjectileType("IceShield");
+                item.shoot = ProjectileType<IceShield>();
                 item.autoReuse = true;
                 item.reuseDelay = 5;
             }
@@ -129,7 +131,7 @@ namespace elemental.Items
                 return false;
             }else{
 
-                ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>(mod);
+                ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>();
                 if (!modPlayer.IceShield && modPlayer.channelice == 0)
                 {
                     Projectile.NewProjectile(position.X, position.Y, speedX, speedY, type, damage, knockBack, player.whoAmI);

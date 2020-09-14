@@ -3,6 +3,7 @@ using elemental.Items;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
+using static Terraria.ModLoader.ModContent;
 
 namespace elemental.NPCs{
     public class ChaosMinnow : ModNPC {
@@ -23,7 +24,7 @@ namespace elemental.NPCs{
         }
         public override void NPCLoot(){
             if(Main.rand.Next(14)==0){
-                Item.NewItem(npc.Center, new Vector2(), mod.ItemType<Chaos_Minnow>());
+                Item.NewItem(npc.Center, new Vector2(), ItemType<Chaos_Minnow>());
             }
         }
         public override void HitEffect(int hitDirection, double damage){

@@ -27,7 +27,7 @@ namespace elemental.Buffs
         }
         public override void Update(Player player, ref int buffIndex)
         {
-            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>(mod);
+            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>();
             player.noKnockback = false;
             player.autoJump = false;
             player.dashDelay = 10;

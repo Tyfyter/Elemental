@@ -1,9 +1,11 @@
 using System;
+using elemental.Buffs;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Terraria.ModLoader.ModContent;
 
 namespace elemental.Projectiles
 {
@@ -54,7 +56,7 @@ namespace elemental.Projectiles
 		}
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-			target.AddBuff(mod.BuffType("ChaosDebuff"), 60);
+			target.AddBuff(BuffType<ChaosDebuff>(), 60);
         }
     }
 }

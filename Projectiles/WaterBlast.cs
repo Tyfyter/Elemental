@@ -1,9 +1,11 @@
 using System;
+using elemental.Buffs;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Terraria.ModLoader.ModContent;
 
 namespace elemental.Projectiles
 {
@@ -38,7 +40,7 @@ namespace elemental.Projectiles
               for (int i = 0; i < numberProjectiles; i++)
               {
                   Vector2 perturbedSpeed = new Vector2(projectile.velocity.X*(1+Main.rand.Next(1)), projectile.velocity.Y).RotatedByRandom(MathHelper.ToRadians(30)); // This defines the projectiles random spread . 30 degree spread.
-                  Projectile.NewProjectile(projectile.position.X, projectile.position.Y, perturbedSpeed.X, perturbedSpeed.Y, mod.ProjectileType<WaterShot2>(), projectile.damage/7, projectile.knockBack, projectile.owner);
+                  Projectile.NewProjectile(projectile.position.X, projectile.position.Y, perturbedSpeed.X, perturbedSpeed.Y, ProjectileType<WaterShot2>(), projectile.damage/7, projectile.knockBack, projectile.owner);
 				  //int iproj = Projectile.NewProjectile(projectile.position.X, projectile.position.Y, perturbedSpeed.X, perturbedSpeed.Y, 27, projectile.damage/7, projectile.knockBack, projectile.owner);
 				  //Main.projectile[iproj].Gravity = true;
               }
@@ -69,7 +71,7 @@ namespace elemental.Projectiles
         {
             target.immune[projectile.owner] = 0;
 			projectile.timeLeft = 6;
-			target.AddBuff(mod.BuffType("WaterDebuff"), target.boss?90:900);
+			target.AddBuff(BuffType<WaterDebuff>(), target.boss?90:900);
         }
     }
 }

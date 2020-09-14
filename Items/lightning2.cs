@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Terraria.ModLoader.ModContent;
  
 namespace elemental.Items
 {
@@ -11,7 +12,7 @@ namespace elemental.Items
     {
         public override int Elements => 32;
 		public int projectileid(Player player, int id = -1){
-            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>(mod);
+            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>();
             if(id != -1) modPlayer.channellightningid = id;
             return modPlayer.channellightningid;
 		}
@@ -41,7 +42,7 @@ namespace elemental.Items
             item.mana = 50;             //mana use
             item.UseSound = SoundID.DD2_EtherianPortalDryadTouch;            //this is the sound when you use the item
             item.autoReuse = false;
-            item.shoot = mod.ProjectileType ("WaterShot");  //this make the item shoot your projectile
+            item.shoot = ProjectileType<WaterShot>();  //this make the item shoot your projectile
             item.shootSpeed = 12.5f;    //projectile speed when shoot
         }    
         public override void AddRecipes(){
@@ -65,7 +66,7 @@ namespace elemental.Items
             {
 				item.useTime = 1;
 				item.useAnimation = 2;
-				item.shoot = mod.ProjectileType("LightningBlast2");
+				item.shoot = ProjectileType<LightningBlast2>();
 				item.shootSpeed = 10f;    //projectile speed when shoot      
 				item.damage = 25;
                 item.channel = true;
@@ -93,7 +94,7 @@ namespace elemental.Items
             {
 				item.useTime = 1;
 				item.useAnimation = 7;
-				item.shoot = mod.ProjectileType<LightningBlast2>();
+				item.shoot = ProjectileType<LightningBlast2>();
 				item.shootSpeed = 10f;    //projectile speed when shoot      
 				item.damage = 25;
                 item.channel = true;
@@ -121,7 +122,7 @@ namespace elemental.Items
 		
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>(mod);
+            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>();
             if(player.altFunctionUse != 2){
 				int numberProjectiles = 3 + Main.rand.Next(4);  //This defines how many projectiles to shot
 				for (int index = 0; index < numberProjectiles; ++index)

@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Terraria.ModLoader.ModContent;
 
 namespace elemental.Items
 {
@@ -16,7 +17,7 @@ namespace elemental.Items
             item.damage = 290;
             item.magic = true;
             item.mana = 90;
-            item.shoot = mod.ProjectileType<AphelionSpike>();
+            item.shoot = ProjectileType<AphelionSpike>();
             item.shootSpeed = 12.5f;
             item.useTime = item.useAnimation = 13;
             item.useStyle = 5;

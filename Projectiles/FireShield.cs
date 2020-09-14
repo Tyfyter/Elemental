@@ -35,7 +35,7 @@ namespace elemental.Projectiles
         public override void AI()           //this make that the projectile will face the corect way
         {                                                           // |
             Player player = Main.player[projectile.owner];
-            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>(mod);
+            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>();
             modPlayer.FlameShield = true;
             Vector2 mousePos = Main.MouseWorld;
             Vector2 unit = (player.Center - mousePos);

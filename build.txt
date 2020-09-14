@@ -4,7 +4,7 @@ homepage =
 
 version = 0.5
 homepage = https://tyfyter.github.io/
-displayName = elements
+displayName = elemental
 includeSource = true
 hideCode = false
 hideResources = false

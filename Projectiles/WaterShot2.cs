@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Terraria.ModLoader.ModContent;
 
 namespace elemental.Projectiles
 {
@@ -71,7 +72,7 @@ namespace elemental.Projectiles
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             target.immune[projectile.owner] = 5;
-			target.AddBuff(mod.BuffType<WaterDebuff>(), target.boss?30:300);
+			target.AddBuff(BuffType<WaterDebuff>(), target.boss?30:300);
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor){
             for(int i = 0; i < 3+(projectile.height/10); i++){

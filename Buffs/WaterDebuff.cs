@@ -36,7 +36,7 @@ namespace elemental.Buffs
         }
         public override void Update(Player player, ref int buffIndex)
         {
-            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>(mod);
+            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>();
             //if(!player.wet)player.breath -= 2;
             //player.gills = player.wet;
             //player.merman = player.wet;

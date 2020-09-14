@@ -8,6 +8,7 @@ using elemental.Items;
 using static elemental.Extentions;
 using elemental.Classes;
 using elemental.Buffs;
+using static Terraria.ModLoader.ModContent;
 
 namespace elemental {
     internal class ElementalPlayer : ModPlayer {
@@ -82,7 +83,7 @@ namespace elemental {
 			multiplyCrit = 1.0f;
             pullhook = Math.Max(pullhook-1, 0);
             if(FireWings){
-                if(Main.time%(player.manaSick?4:6)==0)FireWings = player.CheckMana(2,true);
+                if(Main.GameUpdateCount%(player.manaSick?4:6)==0)FireWings = player.CheckMana(2,true);
                 player.gravity = player.controlUseTile?0.1f:0.35f;
                 player.wingTime = 30;
                 player.wingsLogic = 29;
@@ -97,7 +98,7 @@ namespace elemental {
 
         public override void ModifyHitByProjectile(Projectile proj, ref int damage, ref bool crit)
         {
-            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>(mod);
+            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>();
             if (modPlayer.reflect)
             {
                 Main.projectile[proj.whoAmI].owner = player.whoAmI;
@@ -118,7 +119,7 @@ namespace elemental {
             }
         }
         public override bool ShiftClickSlot(Item[] inventory, int context, int slot){
-            if(inventory[player.selectedItem]!=null)if(inventory[slot].type==ItemID.FragmentSolar&&inventory[slot].stack>=10)if(inventory[player.selectedItem].type==mod.ItemType<firewings>())if(!((firewings)inventory[player.selectedItem].modItem).charged){
+            if(inventory[player.selectedItem]!=null)if(inventory[slot].type==ItemID.FragmentSolar&&inventory[slot].stack>=10)if(inventory[player.selectedItem].type==ItemType<firewings>())if(!((firewings)inventory[player.selectedItem].modItem).charged){
                 ((firewings)inventory[player.selectedItem].modItem).charged = true;
                 inventory[slot].stack-=10;
                 //if(player.HeldItem.stack<=0)player.HeldItem.TurnToAir();
@@ -129,7 +130,7 @@ namespace elemental {
 
         public override bool CanBeHitByProjectile(Projectile proj)
         {
-            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>(mod);
+            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>();
             if (modPlayer.reflect)
             {
                 return false;
@@ -169,21 +170,21 @@ namespace elemental {
             if (stone)
             {
                 npc.AddBuff(BuffID.Confused, 2*damage);
-                //player.AddBuff(mod.BuffType("StoneDamageDebuff"), (int)(damage*0.9));
+                //player.AddBuff(BuffType("StoneDamageDebuff"), (int)(damage*0.9));
                 damage = 0;
             }
         }
         public override void CatchFish(Item fishingRod, Item bait, int power, int liquidType, int poolSize, int worldLayer, int questFish, ref int caughtType, ref bool junk){
             if(junk)return;
             if(player.ZoneHoly&&power>55&&caughtType==2307&&Main.rand.Next(4)!=0){
-                caughtType = mod.ItemType<Chaos_Minnow>();
+                caughtType = ItemType<Chaos_Minnow>();
             }
         }
 
         public override void Hurt(bool pvp, bool quiet, double damage, int hitDirection, bool crit){
             if (stone)
             {
-                player.AddBuff(mod.BuffType("StoneDamageDebuff"), (int)(damage*0.45));
+                player.AddBuff(BuffType<StoneDamageDebuff>(), (int)(damage*0.45));
                 player.statLife += (int)damage;
                 damage = 0;
                 quiet = true;
@@ -199,7 +200,7 @@ namespace elemental {
             if(stone){
                 player.stoned = true;
             }
-			if(player.HasBuff(mod.BuffType<WindDebuff>())){
+			if(player.HasBuff(BuffType<WindDebuff>())){
 				player.noKnockback = false;
 				player.autoJump = false;
 			}

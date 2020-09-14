@@ -14,6 +14,7 @@ using Terraria.GameContent.UI;
 using elemental.Items;
 using elemental.NPCs;
 using System;
+using static Terraria.ModLoader.ModContent;
 
 namespace elemental
 {
@@ -81,13 +82,13 @@ namespace elemental
         public void Stone()
         {
             Player player = Main.player[Main.myPlayer];
-            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>(this);
+            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>();
             modPlayer.stone = !modPlayer.stone;
-            if(!modPlayer.stone && player.HasBuff(mod.BuffType("StoneDamageDebuff"))){
+            if(!modPlayer.stone && player.HasBuff(BuffType("StoneDamageDebuff"))){
                 PlayerDeathReason YUdie = new PlayerDeathReason();
                 YUdie.SourceCustomReason = player.name+" got too stoned.";
-                player.Hurt(YUdie, player.buffTime[player.FindBuffIndex(mod.BuffType("StoneDamageDebuff"))], 0);
-                player.DelBuff(player.FindBuffIndex(mod.BuffType("StoneDamageDebuff")));
+                player.Hurt(YUdie, player.buffTime[player.FindBuffIndex(BuffType("StoneDamageDebuff"))], 0);
+                player.DelBuff(player.FindBuffIndex(BuffType("StoneDamageDebuff")));
             }
             player.chatOverhead.NewMessage(modPlayer.stone+"", 30);
         }
@@ -95,7 +96,7 @@ namespace elemental
         public void ReloadGunF()
         {
             Player player = Main.player[Main.myPlayer];
-            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>(this);
+            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>();
 			modPlayer.reloadgun = true;
 			//player.HeldItem.ReloadGun();
         }
@@ -182,10 +183,35 @@ namespace elemental
             if(gnpc.windKBtime<time)gnpc.windKBtime=time;
 		}
         public static bool HasBuff<T>(this Player player) where T : ModBuff {
-            return player.HasBuff(elementalmod.mod.BuffType<T>());
+            return player.HasBuff(BuffType<T>());
         }
         public static bool HasBuff<T>(this NPC npc) where T : ModBuff {
-            return npc.HasBuff(elementalmod.mod.BuffType<T>());
+            return npc.HasBuff(BuffType<T>());
+        }
+        ///<param name=type>the type of item that will be consumed</param>
+        ///<param name=count>the amount of items that will be consumed</param>
+        ///<param name=safe>whether or not any items will be consumed if the player has less than ``count`` items of the specified type</param>
+        public static bool ConsumeItems(this Player player, int type, int count, bool safe = false){
+            if(safe){
+                int c = 0;
+                for (int i = 0; i < 58; i++){
+                    if (player.inventory[i].type == type)c+=player.inventory[i].stack;
+                }
+                if(c<count)return false;
+            }
+            for (int i = 0; i < 58; i++){
+                if (player.inventory[i].stack > 0 && player.inventory[i].type == type){
+                    if (ItemLoader.ConsumeItem(player.inventory[i], player)){
+                        player.inventory[i].stack-=count;
+                        if (player.inventory[i].stack <= 0){
+                            count = -player.inventory[i].stack;
+                            player.inventory[i].SetDefaults(0, false);
+                        }else return true;
+                    }
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

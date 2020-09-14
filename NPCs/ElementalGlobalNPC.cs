@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Terraria.ModLoader.ModContent;
 
 namespace elemental.NPCs
 {
@@ -23,7 +24,7 @@ namespace elemental.NPCs
 			if(waswetb)npc.noGravity = true;
 			wasweta = false;
 			waswetb = false;
-            if (npc.HasBuff(mod.BuffType<WaterDebuff>())){
+            if (npc.HasBuff(BuffType<WaterDebuff>())){
                 if (npc.noTileCollide){
                     npc.noTileCollide = false;
                     wasweta = true;
@@ -45,6 +46,30 @@ namespace elemental.NPCs
 		public override void AI(NPC npc){
 			if(windKBtime>0)Lighting.AddLight(npc.Center, Color.Goldenrod.ToVector3()/2);
 		}
+        public override bool StrikeNPC(NPC npc, ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit){
+			if(npc.HasBuff(ModContent.BuffType<IncinerateDebuff>())){
+				double dmg = Main.CalculateDamage((int)damage, defense);
+				if (crit){
+					dmg *= 2.0;
+				}
+				if (npc.takenDamageMultiplier > 1f){
+					dmg *= (double)npc.takenDamageMultiplier;
+				}
+				if (npc.realLife >= 0)npc.life = Main.npc[npc.realLife].life;
+				if(dmg >= npc.life){
+					if (npc.realLife >= 0){
+						Main.npc[npc.realLife].life -= (int)dmg;
+						npc.life = Main.npc[npc.realLife].life;
+						npc.lifeMax = Main.npc[npc.realLife].lifeMax;
+						Main.npc[npc.realLife].checkDead();
+					}else{
+						npc.life -= (int)dmg;
+						npc.checkDead();
+					}
+				}
+			}
+			return true;
+		}
         public override bool? CanHitNPC(NPC npc, NPC target){
             if (target.type == NPCID.Bunny || target.type == NPCID.BunnySlimed || target.type == NPCID.BunnyXmas || target.type == NPCID.GoldBunny || target.type == NPCID.PartyBunny || target.type == NPCID.CorruptBunny || target.type == NPCID.CrimsonBunny){
                 return false;
@@ -64,15 +89,15 @@ namespace elemental.NPCs
 		{
 			/*if (type == NPCID.Dryad)
 			{
-				shop.item[nextSlot].SetDefaults(mod.ItemType<Items.CarKey>());
+				shop.item[nextSlot].SetDefaults(ItemType<Items.CarKey>());
 				nextSlot++;
 
-				shop.item[nextSlot].SetDefaults(mod.ItemType<Items.CarKey>());
+				shop.item[nextSlot].SetDefaults(ItemType<Items.CarKey>());
 				shop.item[nextSlot].shopCustomPrice = new int?(2);
 				shop.item[nextSlot].shopSpecialCurrency = CustomCurrencyID.DefenderMedals;
 				nextSlot++;
 
-				shop.item[nextSlot].SetDefaults(mod.ItemType<Items.CarKey>());
+				shop.item[nextSlot].SetDefaults(ItemType<Items.CarKey>());
 				shop.item[nextSlot].shopCustomPrice = new int?(3);
 				shop.item[nextSlot].shopSpecialCurrency = ExampleMod.FaceCustomCurrencyID;
 				nextSlot++;

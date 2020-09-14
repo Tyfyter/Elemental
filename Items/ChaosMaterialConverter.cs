@@ -5,6 +5,8 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
+using static Terraria.ModLoader.ModContent;
+
 namespace elemental.Items
 {
 	public class ChaosMaterialConverter : ModItem
@@ -124,9 +126,9 @@ namespace elemental.Items
 						if(timetotal >= 64){
 							//item.stack = (item.stack+Main.item[souloflight].stack)/2;
 							//Main.item[souloflight].keepTime = 1;
-							Item.NewItem(item.position, new Vector2(), mod.ItemType("ChaosMaterial"), (item.stack+Main.item[souloflight].stack)/2);
+							Item.NewItem(item.position, new Vector2(), ItemType<ChaosMaterial>(), (item.stack+Main.item[souloflight].stack)/2);
 							//this.RightClick(Main.player[item.owner]);
-							//item.type = mod.ItemType("ChaosMaterial");
+							//item.type = ItemType("ChaosMaterial");
 							Main.item[souloflight].stack=0;//.TurnToAir();
 							souloflight = -3;
 							item.stack=0;//.TurnToAir();

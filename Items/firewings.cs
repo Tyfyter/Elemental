@@ -7,6 +7,7 @@ using elemental;
 using System;
 using System.Collections.Generic;
 using Terraria.ModLoader.IO;
+using static Terraria.ModLoader.ModContent;
 
 namespace elemental.Items
 {
@@ -42,13 +43,13 @@ namespace elemental.Items
 		public override void SetStaticDefaults()
 		{
 		  DisplayName.SetDefault("Pyrus");
-		  Tooltip.SetDefault(@"Burns, burns, burns.");
+		  Tooltip.SetDefault(@"And it burns, burns, burns.");
           //the ̵r̵i̵n̵g wing of fire
 		}
 
         public override void HoldItem(Player player)
         {
-            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>(mod);
+            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>();
             int dust3 = Dust.NewDust(player.Center-new Vector2(((2-player.direction)*2)+(player.direction==1?0:0.85f), 13), 0, 0, 182, 0f, 0f, 25, Color.Orange, (modPlayer.FireWings||charge>=30)?0.65f:0.55f);
             Main.dust[dust3].noGravity = true;
             Main.dust[dust3].velocity*=(modPlayer.FireWings||charge>=30)?0.23f:0.07f;
@@ -61,12 +62,12 @@ namespace elemental.Items
  
         public override bool CanUseItem(Player player)
         {
-            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>(mod);
+            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>();
             if (player.altFunctionUse == 2)     //2 is right click
             {
                 item.useTime = 1;
                 item.useAnimation = 15;
-				item.shoot = mod.ProjectileType<FireFeather>();
+				item.shoot = ProjectileType<FireFeather>();
             }
 			else{
                 item.useTime = modPlayer.FireWings?7:17;
@@ -80,16 +81,25 @@ namespace elemental.Items
         {
 			base.ModifyTooltips(tooltips);
             Player player = Main.player[item.owner];
-            if(NPC.downedGolemBoss&&!NPC.downedAncientCultist&&!charged)tooltips.Add(new TooltipLine(mod, "GolemNotif", "It feels a little warmer now."));
+            if(NPC.downedGolemBoss&&!NPC.downedAncientCultist&&!charged)tooltips.Add(new TooltipLine(mod, "GolemNotif", "They feel a little warmer now."));
             if(NPC.downedAncientCultist&&!charged){
                 int b = 0;
                 foreach (var item in player.inventory){
-                    if(item.type==ItemID.FragmentSolar)b+=item.stack;
+                    if(item.type==ItemID.FragmentSolar && (b+=item.stack)>=10)break;
                 }
-                tooltips.Add(new TooltipLine(mod, "CultistNotif", "It's reacting strangely to the celestial pillars."+(b>=10?" (Shift click solar fragments x10 to charge)":"")));
+                tooltips.Add(new TooltipLine(mod, "CultistNotif", "They're reacting strangely to the celestial pillars."+(b>=10?" (Right click to consume [i/s10:3458])":"")));
             }
             if(charged)tooltips.Add(new TooltipLine(mod, "ChargeNotif", "The power of the sun in the palm of your hand."));
         }
+        public override bool CanRightClick(){
+            if(charged)return false;
+            Player player = Main.player[item.owner];
+            if(player.ConsumeItems(ItemID.FragmentSolar, 10, true)){
+                charged = true;
+            }
+            return false;
+        }
+
 		public override TagCompound Save()
 		{
 			return new TagCompound {
@@ -101,10 +111,13 @@ namespace elemental.Items
 		{
 			charged = tag.GetBool("charged");
 		}
-        public override void GetWeaponDamage(Player player, ref int damage){
-            if(NPC.downedGolemBoss||charged)damage = (int)(damage*1.3f);
-            if(charged)damage = (int)(damage*1.3f);
-            base.GetWeaponDamage(player, ref damage);
+        // public override void GetWeaponDamage(Player player, ref int damage){
+        //     if(NPC.downedGolemBoss||charged)damage = (int)(damage*1.3f);
+        //     if(charged)damage = (int)(damage*1.3f);
+        //     base.GetWeaponDamage(player, ref damage);
+        // }
+        public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat){
+            if(charged)mult*=NPC.downedGolemBoss?1.69f:1.3f;
         }
 
 		public override void AddRecipes()
@@ -121,7 +134,7 @@ namespace elemental.Items
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>(mod);
+            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>();
             if(modPlayer.FireWings)damage = (int)(damage*1.5f);
             if (player.altFunctionUse == 2){
                 if(player.controlUseItem||player.controlUseTile){

@@ -109,7 +109,7 @@ namespace elemental.Projectiles
             target.immune[projectile.owner] -= 7;
             float f = target.boss?0.75f:2f;
             target.windDebuff(target.boss?60:600, f, f, f);
-			//target.AddBuff(mod.BuffType("WindDebuff"), target.boss?60:600);
+			//target.AddBuff(BuffType("WindDebuff"), target.boss?60:600);
         }
 
         /// <summary>
@@ -150,7 +150,7 @@ namespace elemental.Projectiles
             else
             {
 
-                if (Main.time % 10 < 1 && !player.CheckMana(player.inventory[player.selectedItem].mana, true))
+                if (Main.GameUpdateCount % 10 < 1 && !player.CheckMana(player.inventory[player.selectedItem].mana, true))
                 {
                     projectile.Kill();
                 }

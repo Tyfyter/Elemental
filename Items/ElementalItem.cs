@@ -18,16 +18,18 @@ namespace elemental.Items
         ///<param name="chaos">16</param>
         ///<param name="lightning">32</param>
         ///<param name="darkness">64</param>
-        public abstract int Elements{get;}
+        public abstract int Elements { get; }
         public virtual bool isElemental => true;
         public override bool Autoload(ref string name){
             return !name.ToLower().Equals("elementalitem");
         }
+#pragma warning disable 672
         public override void GetWeaponDamage(Player player, ref int damage){
             if(player.HasBuff(BuffID.ChaosState)&&(Elements&ElEnum.chaos)!=0){
                 damage=(int)(damage*1.3f);
             }
         }
+#pragma warning restore 672
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
             Player player = Main.player[item.owner];

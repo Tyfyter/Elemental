@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Terraria.ModLoader.ModContent;
  
 namespace elemental.Items
 {
@@ -33,7 +34,7 @@ namespace elemental.Items
             //item.UseSound = SoundID.CreateTrackable("dd2_wither_beast_crystal_impact", 3, SoundType.Sound);            //this is the sound when you use the item
 			item.UseSound = SoundID.DD2_WitherBeastCrystalImpact;
             item.autoReuse = true;
-            item.shoot = mod.ProjectileType<CrystalShot>();  //this make the item shoot your projectile
+            item.shoot = ProjectileType<CrystalShot>();  //this make the item shoot your projectile
             item.shootSpeed = 3.5f;    //projectile speed when shoot
             item.glowMask = customGlowMask;
 			item.useAmmo = AmmoID.Bullet;
@@ -55,7 +56,7 @@ namespace elemental.Items
  
         public override bool CanUseItem(Player player)
         {
-            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>(mod);
+            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>();
             if (player.altFunctionUse == 2)     //2 is right click
             {
 				item.useTime = Math.Max(4-(int)(modPlayer.chaoschaingunspool/5), 2);
@@ -66,7 +67,7 @@ namespace elemental.Items
 				}else{
 					item.damage = 30;
 				}
-				//item.shoot = mod.ProjectileType ("CrystalShot");  //this make the item shoot your projectile
+				//item.shoot = ProjectileType ("CrystalShot");  //this make the item shoot your projectile
 				item.shoot = 477;
 				item.autoReuse = true;
 				item.reuseDelay = Math.Max(5-(int)(modPlayer.chaoschaingunspool/2), 1);
@@ -110,7 +111,7 @@ namespace elemental.Items
 		
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>(mod);
+            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>();
 			Vector2 offset = new Vector2(speedX, speedY);
 			offset.Normalize();
 			Dust.NewDust(position + offset, 1, 1, 134, 0, 0, 0, Color.White, 0.3f);
@@ -119,7 +120,7 @@ namespace elemental.Items
 				for (int i = 0; i < numberProjectiles; i++)
 				{
 					Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(1)); // This defines the projectiles random spread . 30 degree spread.
-					int a = Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, mod.ProjectileType ("CrystalShot"), damage, knockBack, player.whoAmI);
+					int a = Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, ProjectileType<CrystalShot>(), damage, knockBack, player.whoAmI);
 					Main.projectile[a].ai[0] = 0.25f;
 					if(item.prefix == 57){
 					Main.projectile[a].ai[0] = 0.4f;

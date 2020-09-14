@@ -45,7 +45,7 @@ namespace elemental.Projectiles
 		}
         public override void AI(){
             Player player = Main.player[projectile.owner];
-            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>(mod);
+            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>();
             modPlayer.FireWhip = true;
             Vector2 mousePos = Main.MouseWorld;
             oldPos2 = oldPos;
@@ -73,7 +73,7 @@ namespace elemental.Projectiles
                 }
             }catch (Exception){projectile.Kill();return;}
             /*for (int i = 0; i<Main.projectile.Length; i++){
-                if (projectile.Hitbox.Intersects(Main.projectile[i].Hitbox)&&Main.projectile[i].type != mod.ProjectileType<HeresySword>()){
+                if (projectile.Hitbox.Intersects(Main.projectile[i].Hitbox)&&Main.projectile[i].type != ProjectileType<HeresySword>()){
                     //projectile.damage += (int)(Main.projectile[i].damage*0.1f);
                     //Main.projectile[i].velocity.;
                 }
@@ -149,7 +149,7 @@ namespace elemental.Projectiles
 		}
         public override void AI(){
             Player player = Main.player[projectile.owner];
-            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>(mod);
+            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>();
             modPlayer.FireWhip = true;
             Vector2 mousePos = Main.MouseWorld;
             oldPos2 = oldPos;
@@ -158,7 +158,7 @@ namespace elemental.Projectiles
             projectile.Center = player.Center + new Vector2(0, 42).RotatedBy(projectile.rotation - 0.79919);
             projectile.velocity = new Vector2();
             /*for (int i = 0; i<Main.projectile.Length; i++){
-                if (projectile.Hitbox.Intersects(Main.projectile[i].Hitbox)&&Main.projectile[i].type != mod.ProjectileType<HeresySword>()){
+                if (projectile.Hitbox.Intersects(Main.projectile[i].Hitbox)&&Main.projectile[i].type != ProjectileType<HeresySword>()){
                     //projectile.damage += (int)(Main.projectile[i].damage*0.1f);
                     //Main.projectile[i].velocity.;
                 }

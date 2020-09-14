@@ -1,8 +1,10 @@
 using System;
+using elemental.Projectiles;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Terraria.ModLoader.ModContent;
  
 namespace elemental.Items
 {
@@ -28,7 +30,7 @@ namespace elemental.Items
             item.mana = 50;             //mana use
             item.UseSound = SoundID.Item21;            //this is the sound when you use the item
             item.autoReuse = false;
-            item.shoot = mod.ProjectileType ("WaterShot");  //this make the item shoot your projectile
+            item.shoot = ProjectileType<WaterShot>();  //this make the item shoot your projectile
             item.shootSpeed = 12.5f;    //projectile speed when shoot
         }      
 		
@@ -49,7 +51,7 @@ namespace elemental.Items
             {
 				item.useTime = 1;
 				item.useAnimation = 2;
-				item.shoot = mod.ProjectileType("LightningBlast");
+				item.shoot = ProjectileType<LightningBlast>();
 				item.shootSpeed = 10f;    //projectile speed when shoot      
 				item.damage = 50;
                 item.channel = true;

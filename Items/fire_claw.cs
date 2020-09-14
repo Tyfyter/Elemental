@@ -1,7 +1,9 @@
+using elemental.Projectiles;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Terraria.ModLoader.ModContent;
 
 namespace elemental.Items
 {
@@ -24,7 +26,7 @@ namespace elemental.Items
             item.knockBack = 10;        
 			item.value = 10000;
 			item.rare = ItemRarityID.Quest;
-            item.shoot = mod.ProjectileType("FireClaw");
+            item.shoot = ProjectileType<FireClaw>();
             item.autoReuse = true;
         }
 		
@@ -66,7 +68,7 @@ namespace elemental.Items
  
         public override bool CanUseItem(Player player)
         {
-            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>(mod);
+            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>();
             if (player.altFunctionUse == 2)     //2 is right click
             {
                 player.MinionNPCTargetAim();
@@ -90,7 +92,7 @@ namespace elemental.Items
             item.damage = 100;
             item.mana = 0;
             //item.summon = false;
-            //item.shoot = mod.ProjectileType("FireWhip");
+            //item.shoot = ProjectileType("FireWhip");
 			}
             return base.CanUseItem(player);
         }

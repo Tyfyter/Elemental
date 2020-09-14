@@ -6,6 +6,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using System.Collections.Generic;
 using Terraria.Enums;
+using static Terraria.ModLoader.ModContent;
 
 namespace elemental.Projectiles
 {
@@ -52,12 +53,12 @@ namespace elemental.Projectiles
             }
 
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
-        {
-            target.immune[projectile.owner] = 0;
-            if ((float)Main.rand.Next(100) <= (float)(_charge/2)) {
-                target.AddBuff(mod.BuffType("LightningDebuff"), 600);
-            }
-        }
+        // public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        // {
+        //     target.immune[projectile.owner] = 0;
+        //     if ((float)Main.rand.Next(100) <= (float)(_charge/2)) {
+        //         target.AddBuff(BuffType<LightningDebuff>(), 600);
+        //     }
+        // }
     }
 }

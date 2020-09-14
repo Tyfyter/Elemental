@@ -36,7 +36,7 @@ namespace elemental.Items
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>(mod);
+            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>();
             modPlayer.reflect = true;
             player.thrownVelocity += 5f;
             player.thrownVelocity *= 20.1f;

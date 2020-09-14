@@ -39,7 +39,7 @@ namespace elemental.Items
 
 		public override bool UseItem(Player player)
 		{
-            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>(mod);
+            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>();
 			modPlayer.consumedgravityglobes++;
 			if(modPlayer.consumedgravityglobes > 1){
 				Main.NewText("Stop it, get some help");

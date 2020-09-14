@@ -7,6 +7,7 @@ using Terraria.ModLoader;
 using System.Collections.Generic;
 using Terraria.Enums;
 using static elemental.Projectiles.VectorFunctions;
+using static Terraria.ModLoader.ModContent;
 
 namespace elemental.Projectiles
 {
@@ -38,7 +39,7 @@ namespace elemental.Projectiles
         public override void AI()           //this make that the projectile will face the corect way
         {                                                           // |
             Player player = Main.player[projectile.owner];
-            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>(mod);
+            ElementalPlayer modPlayer = player.GetModPlayer<ElementalPlayer>();
             modPlayer.IceShield = true;
             Vector2 mousePos = Main.MouseWorld;
             Vector2 unit = (player.Center - mousePos);
@@ -48,7 +49,7 @@ namespace elemental.Projectiles
             projectile.rotation = (float)Math.Atan2((player.Center - mousePos).Y, (player.Center - mousePos).X) + 3.1157f;
             for (int i = 0; i<Main.projectile.Length; i++)
             {
-                if (projectile.Hitbox.Intersects(Main.projectile[i].Hitbox)&&Main.projectile[i].type != mod.ProjectileType("IceShield")&&Main.projectile[i].damage > 0)
+                if (projectile.Hitbox.Intersects(Main.projectile[i].Hitbox)&&Main.projectile[i].type != projectile.type&&Main.projectile[i].damage > 0)
                 {
                     projectile.ai[0] += Main.projectile[i].damage*0.75f;
                     Main.projectile[i].Kill();
@@ -84,6 +85,7 @@ namespace elemental.Projectiles
 		{
             projectile.ai[0] += target.damage;
 		}
+        //"When I Wrote It, Only God and I Knew the Meaning; Now God Alone Knows."
         public override void ModifyDamageHitbox(ref Rectangle hitbox){
             ray = new Ray(new Vector2().to3(), new Vector2(hitbox.Width,hitbox.Height).to3());
             ray.Position = ray.Position.to2().RotatedBy(projectile.rotation,(ray.Position+(ray.Direction.to2()/2).to3()).to2()).to3();

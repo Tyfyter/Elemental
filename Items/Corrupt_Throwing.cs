@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Terraria.ModLoader.ModContent;
  
 namespace elemental.Items
 {
@@ -30,7 +31,7 @@ namespace elemental.Items
             //item.UseSound = SoundID.CreateTrackable("dd2_wither_beast_crystal_impact", 3, SoundType.Sound);            //this is the sound when you use the item
 			item.UseSound = null;
             item.autoReuse = true;
-            item.shoot = mod.ProjectileType<EclipseBlade>();  //this make the item shoot your projectile
+            item.shoot = ProjectileType<EclipseBlade>();  //this make the item shoot your projectile
             item.shootSpeed = 4.5f;    //projectile speed when shoot
         }      
 		
@@ -51,7 +52,7 @@ namespace elemental.Items
             {
 				item.useTime = 30;
 				item.useAnimation = 30;
-                item.shoot = mod.ProjectileType<EclipseHook>();
+                item.shoot = ProjectileType<EclipseHook>();
 				item.shootSpeed = 6.5f;    
 				item.damage = 50;
                 item.autoReuse = false;
@@ -65,7 +66,7 @@ namespace elemental.Items
             item.useAnimation = 6;
             item.shootSpeed = 4.5f; 
             item.damage = 50;
-            item.shoot = mod.ProjectileType<EclipseBlade>();
+            item.shoot = ProjectileType<EclipseBlade>();
             item.autoReuse = true;
             item.mana = 7;
             }

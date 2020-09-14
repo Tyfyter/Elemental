@@ -38,7 +38,7 @@ namespace elemental.Projectiles
             target.immune[projectile.owner] -= 9;
             float f = target.boss?0.75f:1.5f;
             target.windDebuff(target.boss?60:600, f, f, f);
-			//target.AddBuff(mod.BuffType<WindDebuff>(), target.boss?60:600);
+			//target.AddBuff(BuffType<WindDebuff>(), target.boss?60:600);
         }
     }
 }

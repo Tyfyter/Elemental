@@ -12,6 +12,7 @@ using Terraria.ModLoader.IO;
 using Terraria.DataStructures;
 using Microsoft.Xna.Framework.Graphics;
 using elemental.Items;
+using static Terraria.ModLoader.ModContent;
 
 namespace elemental
 {
@@ -44,7 +45,7 @@ namespace elemental
 			{
 				if (icechestb.item[inventoryIndex].type == 0)
 				{
-					icechestb.item[inventoryIndex].SetDefaults(mod.ItemType<fire>());
+					icechestb.item[inventoryIndex].SetDefaults(ItemType<fire>());
 					icesuccess = true;
 					break;
 				}
@@ -79,7 +80,7 @@ namespace elemental
 				{
 					if (chestb.item[inventoryIndex].type == 0)
 					{
-						chestb.item[inventoryIndex].SetDefaults(mod.ItemType<fire>());
+						chestb.item[inventoryIndex].SetDefaults(ItemType<fire>());
 						success = true;
 						break;
 					}

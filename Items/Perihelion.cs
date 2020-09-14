@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Terraria.ModLoader.ModContent;
 
 namespace elemental.Items
 {
@@ -16,7 +17,7 @@ namespace elemental.Items
             item.damage = 290;
             item.magic = true;
             item.mana = 90;
-            item.shoot = mod.ProjectileType<HeliosBeam>();
+            item.shoot = ProjectileType<HeliosBeam>();
             item.shootSpeed = 12.5f;
             item.useTime = item.useAnimation = 40;
             item.useStyle = 5;
@@ -37,8 +38,11 @@ namespace elemental.Items
         public override float UseTimeMultiplier(Player player){
             return (player.GetModPlayer<ElementalPlayer>()).FireWings?4:1;
         }
-        public override void GetWeaponDamage(Player player, ref int damage){
-            if(player.GetModPlayer<ElementalPlayer>().FireWings)damage = (int)(damage*0.6f);
+        // public override void GetWeaponDamage(Player player, ref int damage){
+        //     if(player.GetModPlayer<ElementalPlayer>().FireWings)damage = (int)(damage*0.6f);
+        // }
+        public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat){
+            if(player.GetModPlayer<ElementalPlayer>().FireWings)mult*=0.6f;
         }
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack){
             Main.PlaySound(2, (int)position.X, (int)position.Y, 14, 0.3f);

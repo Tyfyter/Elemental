@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Terraria.ModLoader.ModContent;
  
 namespace elemental.Items
 {
@@ -28,7 +29,7 @@ namespace elemental.Items
             item.mana = 25;             //mana use
             item.UseSound = null;            //this is the sound when you use the item
             item.autoReuse = true;
-            item.shoot = mod.ProjectileType("WaterShot");  //this make the item shoot your projectile
+            item.shoot = ProjectileType<WaterShot>();  //this make the item shoot your projectile
             item.reuseDelay = 60;
             item.shootSpeed = 12.5f;    //projectile speed when shoot
         }      
@@ -52,7 +53,7 @@ namespace elemental.Items
 				item.useTime = 30;
 				item.useAnimation = 30;
                 item.mana = 100;             //mana use
-                item.shoot = mod.ProjectileType<WaterBlast>();
+                item.shoot = ProjectileType<WaterBlast>();
 				item.shootSpeed = 10f;    //projectile speed when shoot      
 				item.damage = 100;  
 				item.reuseDelay = 0;     
@@ -64,7 +65,7 @@ namespace elemental.Items
             item.useTime = 17;
             item.useAnimation = 30;
             item.mana = 25;             //mana use
-            item.shoot = mod.ProjectileType<WaterShot>();
+            item.shoot = ProjectileType<WaterShot>();
             item.shootSpeed = 12.5f;    //projectile speed when shoot      
             item.damage = 35;
             item.reuseDelay = 20;

@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Terraria.ModLoader.ModContent;
 
 namespace elemental.Projectiles
 {
@@ -42,7 +43,7 @@ namespace elemental.Projectiles
             int a = 479/10*(10-projectile.timeLeft);
             hitbox.Inflate(a,a);
 			for(int i = 0; i < 60; i++){
-			    Dust.NewDustDirect(projectile.Center+new Vector2(a,0).RotatedBy(MathHelper.ToRadians(i+a/2)*6), 0, 0, mod.DustType<IceExplDust>(), 0, 0, 0, Color.LightCyan, 1f).customData = new TwoColorsAndANumber(0, Color.Cyan, Color.DarkBlue);
+			    Dust.NewDustDirect(projectile.Center+new Vector2(a,0).RotatedBy(MathHelper.ToRadians(i+a/2)*6), 0, 0, DustType<IceExplDust>(), 0, 0, 0, Color.LightCyan, 1f).customData = new TwoColorsAndANumber(0, Color.Cyan, Color.DarkBlue);
 			}
         }
     }
