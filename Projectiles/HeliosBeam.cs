@@ -24,7 +24,6 @@ namespace elemental.Projectiles
             projectile.height = 20;
             projectile.friendly = true;
             projectile.magic = true;
-            projectile.tileCollide = true;
             projectile.penetrate = -1;
             projectile.timeLeft = 180;
             projectile.light = 0f;

@@ -14,10 +14,8 @@ namespace elemental.Buffs
         public override void SetDefaults()
         {
 			DisplayName.SetDefault("Incineration");
-			Description.SetDefault("Burn with me.");
-            //Main.buffName[Type] = "Wet"; //the name displayed when hovering over the buff ingame.
-            //Main.buffTip[Type] = "Why is this water so heavy?"; //The description of the buff shown when hovering over ingame.          
-            Main.debuff[Type] = true;   //Tells the game if this is a buff or not.
+			Description.SetDefault("Burn with me.");       
+            Main.debuff[Type] = true;
 			canBeCleared = false;
         }
     }
