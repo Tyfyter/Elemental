@@ -6,7 +6,6 @@ using Terraria.ModLoader;
 
 namespace elemental.Projectiles
 {
-	//ported from my tAPI mod because I don't want to make artwork
 	public class FireClaw : ModProjectile
 	{
 		public override void SetStaticDefaults()

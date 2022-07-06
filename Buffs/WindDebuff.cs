@@ -33,7 +33,7 @@ namespace elemental.Buffs
             player.dashDelay = 10;
         }
 		public override bool ReApply(NPC npc, int time, int buffIndex){
-			npc.knockBackResist += Math.Min(npc.knockBackResist+(5.0f-npc.knockBackResist)/5,5);
+			npc.knockBackResist = Math.Min(npc.knockBackResist+(5.0f-npc.knockBackResist)/5,5);
 			return false;
 		}
     }

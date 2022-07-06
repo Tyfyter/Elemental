@@ -179,7 +179,7 @@ namespace elemental
             if(gnpc.windKBtime<=0){
                 gnpc.baseKB = npc.knockBackResist;
             }
-            if(gnpc.currKB<=max)gnpc.currKB = Math.Min(gnpc.currKB+(sub-gnpc.currKB)/div,max);
+            if(gnpc.currKB<=max)gnpc.currKB = Math.Min(gnpc.currKB+(sub-gnpc.currKB)/div, max);
             if(gnpc.windKBtime<time)gnpc.windKBtime=time;
 		}
         public static bool HasBuff<T>(this Player player) where T : ModBuff {

@@ -135,10 +135,8 @@ namespace elemental.Projectiles
                 player.itemAnimation = 2;
                 player.itemRotation = (float)Math.Atan2(diff.Y * dir, diff.X * dir);
                 projectile.soundDelay--;
-
-
-                #endregion
             }
+            #endregion
 
 
             #region Charging process
